@@ -1,0 +1,48 @@
+package goleri
+
+import (
+	"fmt"
+	"strings"
+)
+
+// Keyword matches a keyword.
+type Keyword struct {
+	element
+	keyword string
+	ignCase bool
+}
+
+// NewKeyword returns a new keyword object.
+func NewKeyword(gid int, keyword string, ignCase bool) *Keyword {
+	return &Keyword{
+		element: element{gid},
+		keyword: keyword,
+		ignCase: ignCase,
+	}
+}
+
+func (keyword *Keyword) String() string {
+	return fmt.Sprintf("<Keyword gid:%d keyword:%v>", keyword.gid, keyword.keyword)
+}
+
+func (keyword *Keyword) parse(p *parser, parent *node) (*node, error) {
+	var match bool
+	var nd *node
+	s := p.getKeyword(parent.end)
+
+	if keyword.ignCase {
+		match = strings.EqualFold(s, keyword.keyword)
+	} else {
+		match = strings.Compare(s, keyword.keyword) == 0
+	}
+
+	if match {
+		nd = newNode(keyword, parent.end)
+		nd.end = parent.end + len(keyword.keyword)
+		p.appendChild(parent, nd)
+	} else {
+		p.expect.update(keyword, parent.end)
+	}
+
+	return nd, nil
+}
