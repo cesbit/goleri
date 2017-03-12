@@ -25,18 +25,23 @@ func (prio *Prio) String() string {
 
 func (prio *Prio) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
 
-	r.depth++
-
 	if r.depth > PrioMaxRecursionDepth {
 		return nil, fmt.Errorf("max recursion depth (%d) is reached", PrioMaxRecursionDepth)
 	}
 
-	nd := newNode(prio, parent.end)
+	r.depth++
 
 	for _, elem := range prio.elements {
+		nd := newNode(prio, parent.end)
+
 		n, err := p.walk(nd, elem, r, modeRequired)
-		if n == nil || err != nil {
+
+		if err != nil {
 			return nil, err
+		}
+
+		if n != nil {
+
 		}
 	}
 
