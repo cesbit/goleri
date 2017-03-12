@@ -8,7 +8,7 @@ type Sequence struct {
 	elements []Element
 }
 
-// NewSequence returns a new keyword object.
+// NewSequence returns a new sequence object.
 func NewSequence(gid int, elements ...Element) *Sequence {
 	return &Sequence{
 		element:  element{gid},
@@ -20,11 +20,11 @@ func (sequence *Sequence) String() string {
 	return fmt.Sprintf("<Sequence gid:%d elements:%v>", sequence.gid, sequence.elements)
 }
 
-func (sequence *Sequence) parse(p *parser, parent *node) (*node, error) {
+func (sequence *Sequence) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
 	nd := newNode(sequence, parent.end)
 
 	for _, elem := range sequence.elements {
-		n, err := p.walk(nd, elem, modeRequired)
+		n, err := p.walk(nd, elem, r, modeRequired)
 		if n == nil || err != nil {
 			return nil, err
 		}

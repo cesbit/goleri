@@ -24,12 +24,12 @@ func (repeat *Repeat) String() string {
 	return fmt.Sprintf("<Repeat gid:%d elem:%v>", repeat.gid, repeat.elem)
 }
 
-func (repeat *Repeat) parse(p *parser, parent *node) (*node, error) {
+func (repeat *Repeat) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
 
 	nd := newNode(repeat, parent.end)
 	var i int
 	for i = 0; repeat.max == 0 || i < repeat.max; i++ {
-		n, err := p.walk(nd, repeat.elem, modeRequired)
+		n, err := p.walk(nd, repeat.elem, r, modeRequired)
 		if err != nil {
 			return nil, err
 		}

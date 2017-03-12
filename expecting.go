@@ -1,7 +1,9 @@
 package goleri
 
-const modeRequired = 0
-const modeOptional = 1
+const (
+	modeRequired = iota
+	modeOptional = iota
+)
 
 type expecting struct {
 	required []Element

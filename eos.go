@@ -12,6 +12,6 @@ func (eos EndOfStatement) String() string {
 	return "<EndOfStatement>"
 }
 
-func (eos EndOfStatement) parse(p *parser, n *node) (*node, error) {
+func (eos EndOfStatement) parse(p *parser, n *node, r *ruleStore) (*node, error) {
 	return nil, nil
 }

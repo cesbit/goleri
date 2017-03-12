@@ -25,7 +25,7 @@ func (keyword *Keyword) String() string {
 	return fmt.Sprintf("<Keyword gid:%d keyword:%v>", keyword.gid, keyword.keyword)
 }
 
-func (keyword *Keyword) parse(p *parser, parent *node) (*node, error) {
+func (keyword *Keyword) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
 	var match bool
 	var nd *node
 	s := p.getKeyword(parent.end)

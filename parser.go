@@ -23,7 +23,7 @@ func newParser(s string, reKeywords *regexp.Regexp) *parser {
 	}
 }
 
-func (p *parser) walk(parent *node, elem Element, mode uint8) (*node, error) {
+func (p *parser) walk(parent *node, elem Element, r *ruleStore, mode uint8) (*node, error) {
 	for parent.end < p.l && unicode.IsSpace(rune(p.s[parent.end])) {
 		parent.end++
 	}
@@ -31,7 +31,7 @@ func (p *parser) walk(parent *node, elem Element, mode uint8) (*node, error) {
 	/* set expecting mode */
 	p.expect.setMode(parent.start, mode)
 
-	return elem.parse(p, parent)
+	return elem.parse(p, parent, r)
 }
 
 func (p *parser) getKeyword(pos int) string {

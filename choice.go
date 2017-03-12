@@ -22,20 +22,20 @@ func (choice *Choice) String() string {
 	return fmt.Sprintf("<Choice gid:%d elements:%v>", choice.gid, choice.elements)
 }
 
-func (choice *Choice) parse(p *parser, parent *node) (*node, error) {
+func (choice *Choice) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
 	if choice.mostGreedy {
-		return choice.parseMostGreedy(p, parent)
+		return choice.parseMostGreedy(p, parent, r)
 	}
-	return choice.parseMostGreedy(p, parent)
+	return choice.parseMostGreedy(p, parent, r)
 }
 
-func (choice *Choice) parseMostGreedy(p *parser, parent *node) (*node, error) {
+func (choice *Choice) parseMostGreedy(p *parser, parent *node, r *ruleStore) (*node, error) {
 	var mgNode *node
 	var nd *node
 
 	for _, elem := range choice.elements {
 		nd = newNode(choice, parent.end)
-		n, err := p.walk(nd, elem, modeRequired)
+		n, err := p.walk(nd, elem, r, modeRequired)
 		if err != nil {
 			return nil, err
 		}
@@ -51,13 +51,13 @@ func (choice *Choice) parseMostGreedy(p *parser, parent *node) (*node, error) {
 	return mgNode, nil
 }
 
-func (choice *Choice) parseFirst(p *parser, parent *node) (*node, error) {
+func (choice *Choice) parseFirst(p *parser, parent *node, r *ruleStore) (*node, error) {
 	var fNode *node
 	var nd *node
 
 	for _, elem := range choice.elements {
 		nd = newNode(choice, parent.end)
-		n, err := p.walk(nd, elem, modeRequired)
+		n, err := p.walk(nd, elem, r, modeRequired)
 
 		if err != nil {
 			return nil, err

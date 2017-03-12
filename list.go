@@ -28,13 +28,13 @@ func (list *List) String() string {
 	return fmt.Sprintf("<List gid:%d elem:%v delimiter:%v>", list.gid, list.elem, list.delimiter)
 }
 
-func (list *List) parse(p *parser, parent *node) (*node, error) {
+func (list *List) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
 
 	nd := newNode(list, parent.end)
 	i := 0
 	j := 0
 	for {
-		n, err := p.walk(nd, list.elem, getMode(i < list.min))
+		n, err := p.walk(nd, list.elem, r, getMode(i < list.min))
 		if err != nil {
 			return nil, err
 		}
@@ -42,7 +42,7 @@ func (list *List) parse(p *parser, parent *node) (*node, error) {
 			break
 		}
 		i++
-		n, err = p.walk(nd, list.delimiter, getMode(i < list.min))
+		n, err = p.walk(nd, list.delimiter, r, getMode(i < list.min))
 		if err != nil {
 			return nil, err
 		}

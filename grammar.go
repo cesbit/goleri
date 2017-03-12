@@ -26,7 +26,7 @@ func (g *Grammar) Parse(s string) (*Result, error) {
 
 	p := newParser(s, g.reKeywords)
 	nd := newNode(nil, 0)
-	n, err := p.walk(nd, g.elem, modeRequired)
+	n, err := p.walk(nd, g.elem, nil, modeRequired)
 	if err != nil {
 		return nil, err
 	}
