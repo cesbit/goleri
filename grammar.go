@@ -31,7 +31,7 @@ func (g *Grammar) Parse(s string) (*Result, error) {
 		return nil, err
 	}
 
-	pr = &Result{n != nil, nd.end, p.expect}
+	pr = &Result{n != nil, 0, p.expect, nd}
 	end := p.l
 
 	// ignore white space at end
@@ -43,6 +43,12 @@ func (g *Grammar) Parse(s string) (*Result, error) {
 
 	if nd.end < end {
 		pr.isValid = false
+	}
+
+	if pr.isValid {
+		pr.pos = p.l
+	} else {
+		pr.pos = p.expect.pos
 	}
 
 	if nd.end < end && len(p.expect.required) == 0 {

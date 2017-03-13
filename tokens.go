@@ -23,8 +23,8 @@ func (tokens *Tokens) String() string {
 	return fmt.Sprintf("<Tokens gid:%d tokens:%v>", tokens.gid, tokens.tokens)
 }
 
-func (tokens *Tokens) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
-	var nd *node
+func (tokens *Tokens) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
+	var nd *Node
 	var match bool
 	var tokenLen int
 	for _, token := range tokens.tokens {

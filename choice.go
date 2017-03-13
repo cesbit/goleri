@@ -22,16 +22,16 @@ func (choice *Choice) String() string {
 	return fmt.Sprintf("<Choice gid:%d elements:%v>", choice.gid, choice.elements)
 }
 
-func (choice *Choice) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
+func (choice *Choice) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	if choice.mostGreedy {
 		return choice.parseMostGreedy(p, parent, r)
 	}
 	return choice.parseMostGreedy(p, parent, r)
 }
 
-func (choice *Choice) parseMostGreedy(p *parser, parent *node, r *ruleStore) (*node, error) {
-	var mgNode *node
-	var nd *node
+func (choice *Choice) parseMostGreedy(p *parser, parent *Node, r *ruleStore) (*Node, error) {
+	var mgNode *Node
+	var nd *Node
 
 	for _, elem := range choice.elements {
 		nd = newNode(choice, parent.end)
@@ -51,9 +51,9 @@ func (choice *Choice) parseMostGreedy(p *parser, parent *node, r *ruleStore) (*n
 	return mgNode, nil
 }
 
-func (choice *Choice) parseFirst(p *parser, parent *node, r *ruleStore) (*node, error) {
-	var fNode *node
-	var nd *node
+func (choice *Choice) parseFirst(p *parser, parent *Node, r *ruleStore) (*Node, error) {
+	var fNode *Node
+	var nd *Node
 
 	for _, elem := range choice.elements {
 		nd = newNode(choice, parent.end)

@@ -3,7 +3,7 @@ package goleri
 // Element interface for all goleri elements.
 type Element interface {
 	Gid() int
-	parse(p *parser, n *node, r *ruleStore) (*node, error)
+	parse(p *parser, parent *Node, r *ruleStore) (*Node, error)
 }
 
 type element struct {

@@ -2,7 +2,8 @@ package goleri
 
 import "fmt"
 
-const PrioMaxRecursionDepth = 200
+// PrioMaxRecursionDepth is the maximum recursion depth used.
+const PrioMaxRecursionDepth = 10
 
 // Prio can match with a reference to itself.
 type Prio struct {
@@ -23,7 +24,7 @@ func (prio *Prio) String() string {
 	return fmt.Sprintf("<Prio gid:%d elements:%v>", prio.gid, prio.elements)
 }
 
-func (prio *Prio) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
+func (prio *Prio) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
 	if r.depth > PrioMaxRecursionDepth {
 		return nil, fmt.Errorf("max recursion depth (%d) is reached", PrioMaxRecursionDepth)
@@ -33,7 +34,6 @@ func (prio *Prio) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
 
 	for _, elem := range prio.elements {
 		nd := newNode(prio, parent.end)
-
 		n, err := p.walk(nd, elem, r, modeRequired)
 
 		if err != nil {
@@ -41,11 +41,14 @@ func (prio *Prio) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
 		}
 
 		if n != nil {
-
+			r.update(n)
 		}
 	}
 
-	p.appendChild(parent, nd)
+	if nd, ok := r.tested[parent.end]; ok && nd != nil {
+		p.appendChild(parent, nd)
+		return nd, nil
+	}
 
-	return nd, nil
+	return nil, nil
 }

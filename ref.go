@@ -27,6 +27,6 @@ func (ref *Ref) Set(elem Element) {
 	ref.elem = elem
 }
 
-func (ref *Ref) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
+func (ref *Ref) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	return ref.elem.parse(p, parent, r)
 }

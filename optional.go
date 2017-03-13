@@ -20,7 +20,7 @@ func (optional *Optional) String() string {
 	return fmt.Sprintf("<Optional gid:%d elem:%v>", optional.gid, optional.elem)
 }
 
-func (optional *Optional) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
+func (optional *Optional) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
 	nd := newNode(optional, parent.end)
 	n, err := p.walk(nd, optional.elem, r, modeOptional)

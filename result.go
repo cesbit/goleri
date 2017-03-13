@@ -5,6 +5,7 @@ type Result struct {
 	isValid bool
 	pos     int
 	expect  *expecting
+	tree    *Node
 }
 
 // IsValid returns true when a parse result is valid.
@@ -17,3 +18,6 @@ func (r *Result) Pos() int { return r.pos }
 func (r *Result) GetExpecting() []Element {
 	return r.expect.getExpecting()
 }
+
+// Tree returns the node tree.
+func (r *Result) Tree() *Node { return r.tree }

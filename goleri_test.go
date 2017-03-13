@@ -8,13 +8,13 @@ import (
 
 func TestGoleri(t *testing.T) {
 	c := NewRef()
-	ni := NewKeyword(0, "ni", true)
+	ni := NewRegex(0, regexp.MustCompile(`(?i)^n[ioa]`))
 
 	calc := NewPrio(
 		4,
 		ni,
-		NewSequence(0, NewToken(0, "("), THIS, NewToken(0, ")")),
 		NewSequence(0, THIS, NewTokens(0, "+ - / %"), THIS),
+		NewSequence(0, NewToken(0, "("), THIS, NewToken(0, ")")),
 	)
 
 	seq := NewSequence(
@@ -30,13 +30,17 @@ func TestGoleri(t *testing.T) {
 
 	gr := NewGrammar(seq, reKw)
 
-	pr, err := gr.Parse("hoi iris ni, ni.ni,")
+	pr, err := gr.Parse("(Ni+(no - na)) hoi iris ni, ni.ni,")
 	if err != nil {
 		fmt.Printf("Error: %s\n", err.Error())
 	} else {
 		fmt.Printf("IsValid: %v\n", pr.IsValid())
 		fmt.Printf("Position: %v\n", pr.Pos())
 		fmt.Printf("Expecting: %v\n", pr.GetExpecting())
+		fmt.Printf("Tree: %v\n", pr.Tree())
+		if pr.IsValid() {
+			fmt.Printf("Tree: %v\n", pr.Tree().children[0])
+		}
 	}
 
 }

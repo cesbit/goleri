@@ -24,8 +24,8 @@ func (token *Token) String() string {
 	return fmt.Sprintf("<Token gid:%d token:%v>", token.gid, token.token)
 }
 
-func (token *Token) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
-	var nd *node
+func (token *Token) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
+	var nd *Node
 	match := true
 	for i, j := 0, parent.end; i < token.l; i++ {
 		if j == p.l || p.s[j] != token.token[i] {

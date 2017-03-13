@@ -24,7 +24,7 @@ func (repeat *Repeat) String() string {
 	return fmt.Sprintf("<Repeat gid:%d elem:%v>", repeat.gid, repeat.elem)
 }
 
-func (repeat *Repeat) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
+func (repeat *Repeat) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
 	nd := newNode(repeat, parent.end)
 	var i int

@@ -9,7 +9,7 @@ type Rule struct {
 }
 
 type ruleStore struct {
-	tested []*node
+	tested map[int]*Node
 	root   Element
 	depth  int
 }
@@ -26,11 +26,11 @@ func (rule *Rule) String() string {
 	return fmt.Sprintf("<Rule gid:%d elem:%v>", rule.gid, rule.elem)
 }
 
-func (rule *Rule) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
+func (rule *Rule) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
 	nd := newNode(rule, parent.end)
 
-	rs := ruleStore{[]*node{}, rule.elem, 0}
+	rs := ruleStore{make(map[int]*Node), rule.elem, 0}
 
 	n, err := p.walk(nd, rs.root, &rs, modeRequired)
 	if n == nil || err != nil {
@@ -40,4 +40,15 @@ func (rule *Rule) parse(p *parser, parent *node, r *ruleStore) (*node, error) {
 	p.appendChild(parent, nd)
 
 	return nd, nil
+}
+
+func (r *ruleStore) update(nd *Node) {
+	if n, ok := r.tested[nd.start]; ok {
+		if n == nil || nd.end > n.end {
+			r.tested[nd.start] = nd
+			return
+		}
+	} else {
+		r.tested[nd.start] = nd
+	}
 }
