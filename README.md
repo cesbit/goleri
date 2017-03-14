@@ -49,6 +49,6 @@ func MyGrammar() *goleri.Grammar {
 myGrammar := MyGrammar()
 
 // use the compiled grammar to parse 'strings'
-my_grammar.Parse("hi 'Iris'").isValid() // true
-my_grammar.Parse("bye 'Iris'").isValid() // false
+myGrammar.Parse("hi 'Iris'").isValid() // true
+myGrammar.Parse("bye 'Iris'").isValid() // false
 ```
