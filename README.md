@@ -22,6 +22,7 @@ Make sure [Git is installed](https://git-scm.com/downloads) on your machine and 
 
 ---------------------------------------
 ## Quick usage
+We recommend using [pyleri](https://github.com/transceptor-technology/pyleri) for creating a grammar and export the grammar to goleri. This way you can create one single grammar and export the grammar to program languages like C, JavaScript, Go and Python.
 ```go
 package grammar
 
