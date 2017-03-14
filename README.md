@@ -20,35 +20,35 @@ Make sure [Git is installed](https://git-scm.com/downloads) on your machine and 
 package grammar
 
 import (
-        "regexp"
+	"fmt"
+	"regexp"
 
-        "github.com/transceptor-technology/goleri"
+	"github.com/transceptor-technology/goleri"
 )
 
 // Element identifiers
 const (
-        NoGid = iota
-        GidKHi = iota
-        GidRName = iota
-        GidSTART = iota
+	NoGid    = iota
+	GidHi    = iota
+	GidName  = iota
+	GidSTART = iota
 )
 
 // MyGrammar returns a compiled goleri grammar.
 func MyGrammar() *goleri.Grammar {
-        rName := goleri.NewRegex(GidRName, regexp.MustCompile(`^(?:'(?:[^']*)')+`))
-        kHi := goleri.NewKeyword(GidKHi, "hi", false)
-        START := goleri.NewSequence(
-                GidSTART,
-                kHi,
-                rName,
-        )
-        return goleri.NewGrammar(START, regexp.MustCompile(`^\w+`))
+	name := goleri.NewRegex(GidName, regexp.MustCompile(`^(?:'(?:[^']*)')+`))
+	hi := goleri.NewKeyword(GidHi, "hi", false)
+	START := goleri.NewSequence(GidSTART, hi, name)
+	return goleri.NewGrammar(START, regexp.MustCompile(`^\w+`))
 }
 
-// compile your grammar by creating an instance of the Grammar Class.
-myGrammar := MyGrammar()
+func main() {
+	// compile your grammar by creating an instance of the Grammar Class.
+	myGrammar := MyGrammar()
 
-// use the compiled grammar to parse 'strings'
-myGrammar.Parse("hi 'Iris'").isValid() // true
-myGrammar.Parse("bye 'Iris'").isValid() // false
+	// use the compiled grammar to parse 'strings'
+	if res, err := myGrammar.Parse("hi 'Iris'"); err == nil {
+		fmt.Printf("%v\n", res.IsValid())
+	}
+}
 ```
