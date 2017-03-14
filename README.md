@@ -4,17 +4,22 @@ A left-right parser for the Go language.
 
 ---------------------------------------
   * [Installation](#installation)
-  * [Quick usage](#quick usage)
+  * [Quick usage](#quickusage)
   
 ---------------------------------------
-
 ## Installation
 Simple install the package to your [$GOPATH](https://github.com/golang/go/wiki/GOPATH "GOPATH") with the [go tool](https://golang.org/cmd/go/ "go command") from shell:
 ```bash
 $ go get github.com/transceptor-technology/goleri
 ```
 Make sure [Git is installed](https://git-scm.com/downloads) on your machine and in your system's `PATH`.
+## Related projects
+---------------------------------------
+- [pyleri](https://github.com/transceptor-technology/pyleri): Python parser
+- [jsleri](https://github.com/transceptor-technology/jsleri): JavaScript parser
+- [cleri](https://github.com/transceptor-technology/cleri): C parser
 
+---------------------------------------
 ## Quick usage
 ```go
 package grammar
