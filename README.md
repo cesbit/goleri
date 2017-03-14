@@ -35,7 +35,7 @@ const (
 
 // MyGrammar returns a compiled goleri grammar.
 func MyGrammar() *goleri.Grammar {
-        rName := goleri.NewRegex(GidRName, regexp.MustCompile(`^(?:"(?:[^"]*)")+`))
+        rName := goleri.NewRegex(GidRName, regexp.MustCompile(`^(?:'(?:[^']*)')+`))
         kHi := goleri.NewKeyword(GidKHi, "hi", false)
         START := goleri.NewSequence(
                 GidSTART,
@@ -44,4 +44,11 @@ func MyGrammar() *goleri.Grammar {
         )
         return goleri.NewGrammar(START, regexp.MustCompile(`^\w+`))
 }
+
+// compile your grammar by creating an instance of the Grammar Class.
+myGrammar := MyGrammar()
+
+// use the compiled grammar to parse 'strings'
+my_grammar.Parse("hi 'Iris'").isValid() // true
+my_grammar.Parse("bye 'Iris'").isValid() // false
 ```
