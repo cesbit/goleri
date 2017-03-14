@@ -4,7 +4,7 @@ A left-right parser for the Go language.
 
 ---------------------------------------
   * [Installation](#installation)
-  * [Quick usage](#quickusage)
+  * [Quick usage](#quick_usage)
   
 ---------------------------------------
 ## Installation
