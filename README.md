@@ -42,13 +42,12 @@ func MyGrammar() *goleri.Grammar {
 	return goleri.NewGrammar(START, regexp.MustCompile(`^\w+`))
 }
 
-func main() {
-	// compile your grammar by creating an instance of the Grammar Class.
-	myGrammar := MyGrammar()
+...
+// compile your grammar by creating an instance of the Grammar Class.
+myGrammar := MyGrammar()
 
-	// use the compiled grammar to parse 'strings'
-	if res, err := myGrammar.Parse("hi 'Iris'"); err == nil {
-		fmt.Printf("%v\n", res.IsValid())
-	}
+// use the compiled grammar to parse 'strings'
+if res, err := myGrammar.Parse("hi 'Iris'"); err == nil {
+	fmt.Printf("%v\n", res.IsValid())
 }
 ```
