@@ -56,5 +56,18 @@ myGrammar := MyGrammar()
 // use the compiled grammar to parse 'strings'
 if res, err := myGrammar.Parse("hi 'Iris'"); err == nil {
 	fmt.Printf("%v\n", res.IsValid())
+	/*
+	res.IsValid()
+		returns true or false depending if the string is successful parsed
+		by the grammar or not.
+	res.Pos()  
+		returns the position in the string where parsing has end. 
+		(if successful this will be equal to the string length)
+	res.GetExpecting()
+		returns expected elements at position res.Pos(). This can be used
+		for auto-completion, auto correction or suggestions.
+	res.Tree()
+		returns the parse tree.
+	*/
 }
 ```
