@@ -18,7 +18,7 @@ Make sure [Git is installed](https://git-scm.com/downloads) on your machine and 
 ---------------------------------------
 - [pyleri](https://github.com/transceptor-technology/pyleri): Python parser
 - [jsleri](https://github.com/transceptor-technology/jsleri): JavaScript parser
-- [cleri](https://github.com/transceptor-technology/cleri): C parser
+- [libcleri](https://github.com/transceptor-technology/libcleri): C parser
 
 ---------------------------------------
 ## Quick usage
