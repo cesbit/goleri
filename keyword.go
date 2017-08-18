@@ -21,6 +21,11 @@ func NewKeyword(gid int, keyword string, ignCase bool) *Keyword {
 	}
 }
 
+// GetKeyword returns the keyword
+func (keyword *Keyword) GetKeyword() string {
+	return keyword.keyword
+}
+
 func (keyword *Keyword) String() string {
 	return fmt.Sprintf("<Keyword gid:%d keyword:%v>", keyword.gid, keyword.keyword)
 }

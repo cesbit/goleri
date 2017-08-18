@@ -9,7 +9,7 @@ type Choice struct {
 	elements   []Element
 }
 
-// NewChoice returns a new keyword object.
+// NewChoice returns a new choice object.
 func NewChoice(gid int, mostGreedy bool, elements ...Element) *Choice {
 	return &Choice{
 		element:    element{gid},

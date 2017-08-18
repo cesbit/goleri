@@ -52,8 +52,6 @@ func (list *List) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 		j++
 	}
 
-	fmt.Printf("i: %d, j: %d\n", i, j)
-
 	if i < list.min ||
 		(list.max != 0 && i > list.max) ||
 		((!list.optClose) && i != 0 && i == j) {

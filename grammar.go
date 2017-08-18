@@ -1,7 +1,6 @@
 package goleri
 
 import (
-	"fmt"
 	"regexp"
 	"unicode"
 )
@@ -38,8 +37,6 @@ func (g *Grammar) Parse(s string) (*Result, error) {
 	for end > 0 && unicode.IsSpace(rune(p.s[end-1])) {
 		end--
 	}
-
-	fmt.Printf("end: %d node: %d\n", end, nd.end)
 
 	if nd.end < end {
 		pr.isValid = false

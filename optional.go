@@ -8,7 +8,7 @@ type Optional struct {
 	elem Element
 }
 
-// NewOptional returns a new keyword object.
+// NewOptional returns a new optional object.
 func NewOptional(gid int, elem Element) *Optional {
 	return &Optional{
 		element: element{gid},
@@ -21,7 +21,6 @@ func (optional *Optional) String() string {
 }
 
 func (optional *Optional) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
-
 	nd := newNode(optional, parent.end)
 	n, err := p.walk(nd, optional.elem, r, modeOptional)
 

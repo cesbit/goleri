@@ -19,8 +19,13 @@ func NewRegex(gid int, regex *regexp.Regexp) *Regex {
 	}
 }
 
+// GetRegex returns the regular expression
+func (regex *Regex) GetRegex() *regexp.Regexp {
+	return regex.regex
+}
+
 func (regex *Regex) String() string {
-	return fmt.Sprintf("<Regex gid:%d keyword:%v>", regex.gid, regex.regex)
+	return fmt.Sprintf("<Regex gid:%d regex:%v>", regex.gid, regex.regex)
 }
 
 func (regex *Regex) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
