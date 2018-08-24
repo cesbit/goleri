@@ -24,7 +24,7 @@ Make sure [Git is installed](https://git-scm.com/downloads) on your machine and 
 ## Quick usage
 We recommend using [pyleri](https://github.com/transceptor-technology/pyleri) for creating a grammar and export the grammar to goleri. This way you can create one single grammar and export the grammar to program languages like C, JavaScript, Go and Python.
 ```go
-package grammar
+package main
 
 import (
 	"fmt"
@@ -49,25 +49,26 @@ func MyGrammar() *goleri.Grammar {
 	return goleri.NewGrammar(START, regexp.MustCompile(`^\w+`))
 }
 
-...
-// compile your grammar by creating an instance of the Grammar Class.
-myGrammar := MyGrammar()
+func main() {
+	// compile your grammar by creating an instance of the Grammar Class.
+	myGrammar := MyGrammar()
 
-// use the compiled grammar to parse 'strings'
-if res, err := myGrammar.Parse("hi 'Iris'"); err == nil {
-	fmt.Printf("%v\n", res.IsValid())
-	/*
-	res.IsValid()
-		returns true or false depending if the string is successful parsed
-		by the grammar or not.
-	res.Pos()  
-		returns the position in the string where parsing has end. 
-		(if successful this will be equal to the string length)
-	res.GetExpecting()
-		returns expected elements at position res.Pos(). This can be used
-		for auto-completion, auto correction or suggestions.
-	res.Tree()
-		returns the parse tree.
-	*/
+	// use the compiled grammar to parse 'strings'
+	if res, err := myGrammar.Parse("hi 'Iris'"); err == nil {
+		fmt.Printf("%v\n", res.IsValid())
+		/*
+		res.IsValid()
+			returns true or false depending if the string is successful parsed
+			by the grammar or not.
+		res.Pos()
+			returns the position in the string where parsing has end.
+			(if successful this will be equal to the string length)
+		res.GetExpecting()
+			returns expected elements at position res.Pos(). This can be used
+			for auto-completion, auto correction or suggestions.
+		res.Tree()
+			returns the parse tree.
+		*/
+	}
 }
 ```
