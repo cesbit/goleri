@@ -135,7 +135,7 @@ func TestOptional(t *testing.T) {
 
 func TestToken(t *testing.T) {
 	token := NewToken(0, "+")
-	grammar := NewGrammar(token, regexp.MustCompile(`^\W+`)) //??
+	grammar := NewGrammar(token, regexp.MustCompile(`^\w+`)) //??
 
 	// assert statements
 	assertEquals(t, 0, token.Gid())
@@ -150,7 +150,7 @@ func TestToken(t *testing.T) {
 
 func TestTokenMultiChars(t *testing.T) {
 	token := NewToken(0, "+=")
-	grammar := NewGrammar(token, regexp.MustCompile(`^\W+`)) //??
+	grammar := NewGrammar(token, regexp.MustCompile(`^\w+`)) //??
 
 	// assert statements
 	assertEquals(t, 0, token.Gid())
@@ -224,7 +224,7 @@ func TestRepeat(t *testing.T) {
 
 func TestTokens(t *testing.T) {
 	tokens := NewTokens(0, "== != >=   >   < <=")
-	grammar := NewGrammar(tokens, regexp.MustCompile(`^\W+`)) //??
+	grammar := NewGrammar(tokens, regexp.MustCompile(`^\w+`))
 
 	// assert statements
 	assertEquals(t, 0, tokens.Gid())
