@@ -3,7 +3,7 @@ package goleri
 import "fmt"
 
 // PrioMaxRecursionDepth is the maximum recursion depth used.
-const PrioMaxRecursionDepth = 10
+const PrioMaxRecursionDepth = 50
 
 // Prio can match with a reference to itself.
 type Prio struct {
@@ -14,10 +14,10 @@ type Prio struct {
 // NewPrio returns a new rule object containing a prio object.
 func NewPrio(gid int, elements ...Element) *Rule {
 	prio := Prio{
-		element:  element{0},
+		element:  element{gid},
 		elements: elements,
 	}
-	return NewRule(gid, &prio)
+	return NewRule(0, &prio)
 }
 
 func (prio *Prio) String() string {

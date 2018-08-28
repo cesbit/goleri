@@ -1,7 +1,5 @@
 package goleri
 
-import "fmt"
-
 // Rule is a prio wrapper..
 type Rule struct {
 	element
@@ -23,7 +21,7 @@ func NewRule(gid int, elem Element) *Rule {
 }
 
 func (rule *Rule) String() string {
-	return fmt.Sprintf("<Rule gid:%d elem:%v>", rule.gid, rule.elem)
+	return rule.elem.String()
 }
 
 func (rule *Rule) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
