@@ -26,7 +26,7 @@ func (choice *Choice) parse(p *parser, parent *Node, r *ruleStore) (*Node, error
 	if choice.mostGreedy {
 		return choice.parseMostGreedy(p, parent, r)
 	}
-	return choice.parseMostGreedy(p, parent, r)
+	return choice.parseFirst(p, parent, r)
 }
 
 func (choice *Choice) parseMostGreedy(p *parser, parent *Node, r *ruleStore) (*Node, error) {

@@ -2,6 +2,7 @@ package goleri
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -11,11 +12,25 @@ type Tokens struct {
 	tokens []string
 }
 
+type byLength []string
+
+func (s byLength) Len() int {
+	return len(s)
+}
+func (s byLength) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+func (s byLength) Less(i, j int) bool {
+	return len(s[i]) < len(s[j])
+}
+
 // NewTokens returns a new token object.
 func NewTokens(gid int, tokens string) *Tokens {
+	t := strings.Fields(tokens)
+	sort.Sort(sort.Reverse(byLength(t)))
 	return &Tokens{
 		element: element{gid},
-		tokens:  strings.Fields(tokens),
+		tokens:  t,
 	}
 }
 
