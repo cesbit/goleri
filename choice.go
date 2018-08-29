@@ -18,6 +18,9 @@ func NewChoice(gid int, mostGreedy bool, elements ...Element) *Choice {
 	}
 }
 
+// IsMostGreedy return the boolean mostGreedy.
+func (choice *Choice) IsMostGreedy() bool { return choice.mostGreedy }
+
 func (choice *Choice) String() string {
 	return fmt.Sprintf("<Choice gid:%d elements:%v>", choice.gid, choice.elements)
 }

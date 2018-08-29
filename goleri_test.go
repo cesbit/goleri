@@ -90,6 +90,7 @@ func TestChoiceMostGreedy(t *testing.T) {
 	grammar := NewGrammar(choice, regexp.MustCompile(`^\w+`))
 
 	// assert statements
+	assertEquals(t, true, choice.IsMostGreedy())
 	assertEquals(t, 0, choice.Gid())
 	assertEquals(t, true, parse(t, grammar, "hi").IsValid())
 	assertEquals(t, true, parse(t, grammar, "hi iris").IsValid())
@@ -109,6 +110,7 @@ func TestChoiceFirstMatch(t *testing.T) {
 
 	// assert statements
 	assertEquals(t, 0, choice.Gid())
+	assertEquals(t, false, choice.IsMostGreedy())
 	assertEquals(t, true, parse(t, grammar, "hi").IsValid())
 	assertEquals(t, false, parse(t, grammar, "hi iris").IsValid())
 	assertEquals(t, false, parse(t, grammar, "hi siri").IsValid())

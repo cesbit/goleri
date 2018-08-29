@@ -49,6 +49,5 @@ func (keyword *Keyword) parse(p *parser, parent *Node, r *ruleStore) (*Node, err
 	} else {
 		p.expect.update(keyword, parent.end)
 	}
-
 	return nd, nil
 }
