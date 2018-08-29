@@ -34,6 +34,9 @@ func NewTokens(gid int, tokens string) *Tokens {
 	}
 }
 
+// GetToken returns the token
+func (tokens *Tokens) GetTokens() []string { return tokens.tokens }
+
 func (tokens *Tokens) String() string {
 	return fmt.Sprintf("<Tokens gid:%d tokens:%v>", tokens.gid, tokens.tokens)
 }

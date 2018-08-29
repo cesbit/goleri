@@ -20,6 +20,12 @@ func NewRepeat(gid int, elem Element, min, max int) *Repeat {
 	}
 }
 
+// GetMin returns the min
+func (repeat *Repeat) GetMin() int { return repeat.min }
+
+// GetMax returns the max
+func (repeat *Repeat) GetMax() int { return repeat.max }
+
 func (repeat *Repeat) String() string {
 	return fmt.Sprintf("<Repeat gid:%d elem:%v>", repeat.gid, repeat.elem)
 }

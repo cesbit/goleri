@@ -24,6 +24,15 @@ func NewList(gid int, elem, delimiter Element, min, max int, optClose bool) *Lis
 	}
 }
 
+// GetMin returns the minimal number of elements
+func (list *List) GetMin() int { return list.min }
+
+// GetMax returns the maximal number of elements
+func (list *List) GetMax() int { return list.max }
+
+// IsOptClose returns a boolean of optClose
+func (list *List) IsOptClose() bool { return list.optClose }
+
 func (list *List) String() string {
 	return fmt.Sprintf("<List gid:%d elem:%v delimiter:%v>", list.gid, list.elem, list.delimiter)
 }
