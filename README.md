@@ -227,8 +227,7 @@ sequence := goleri.NewSequence(
 	0,
 	goleri.NewKeyword(0, "tic", false),
 	goleri.NewKeyword(0, "tac", false),
-	goleri.NewKeyword(0, "toe", false)
-)
+	goleri.NewKeyword(0, "toe", false))
 grammar := goleri.NewGrammar(sequence, regexp.MustCompile(`^\w+`))
 if res, err := grammar.Parse("tic tac toe"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
@@ -249,13 +248,11 @@ choice := goleri.NewChoice(
 	0,
 	true,
 	goleri.NewKeyword(0, "hi", false),
-	goleri.NewKeyword(0, "bye", true)
-)
+	goleri.NewKeyword(0, "bye", true))
 sequence := goleri.NewSequence(
 	0,
 	choice,
-	goleri.NewRegex(0, regexp.MustCompile(`^(?:'(?:[^']*)')+`))
-)
+	goleri.NewRegex(0, regexp.MustCompile(`^(?:'(?:[^']*)')+`)))
 grammar := goleri.NewGrammar(sequence, regexp.MustCompile(`^\w+`))
 if res, err := grammar.Parse("hi 'Iris'"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
@@ -280,8 +277,7 @@ repeat := goleri.NewRepeat(
 	0,
 	goleri.NewKeyword(0, "na", false),
 	1,
-	8
-)
+	8)
 grammar := goleri.NewGrammar(repeat, regexp.MustCompile(`^\w+`))
 if res, err := grammar.Parse("na na na na na na"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
@@ -306,8 +302,7 @@ list := goleri.NewList(
 	goleri.NewToken(0, ","),
 	1,
 	8,
-	true
-)
+	true)
 grammar := goleri.NewGrammar(list, regexp.MustCompile(`^\w+`))
 if res, err := grammar.Parse("ni, ni, ni, ni,"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
@@ -329,8 +324,7 @@ Example:
 ```go
 optional := goleri.NewOptional(
 	0,
-	goleri.NewRegex(0, regexp.MustCompile(`^(?:'(?:[^']*)')+`))
-)
+	goleri.NewRegex(0, regexp.MustCompile(`^(?:'(?:[^']*)')+`)))
 sequence := goleri.NewSequence(0, goleri.NewKeyword(0, "hi", false), optional)
 grammar := goleri.NewGrammar(sequence, regexp.MustCompile(`^\w+`))
 if res, err := grammar.Parse("hi"); err == nil {
@@ -370,15 +364,13 @@ START.Set(goleri.NewSequence(
 		goleri.NewToken(0, ","),
 		0,
 		0,
-		false
-	),
-	goleri.NewToken(0, "]")
-))
+		false),
+	goleri.NewToken(0, "]")))
 grammar := goleri.NewGrammar(START, regexp.MustCompile(`^\w+`))
 
 if res, err := grammar.Parse("[ni, ni, [ni, [], [ni, ni]]]"); err == nil {
-	fmt.Printf("%t\n", res.IsValid()) //true
-	fmt.Printf("%t\n", res.String())
+	fmt.Printf("%t\n", res.IsValid()) // true
+	fmt.Printf("%t\n", START.String()) // <Ref isSet:true>
 }
 ```
 
@@ -401,8 +393,7 @@ prio := goleri.NewPrio(
 	ni,
 	goleri.NewSequence(0, goleri.NewToken(0, "("), goleri.THIS, goleri.NewToken(0, ")")),
 	goleri.NewSequence(0, goleri.THIS, goleri.NewKeyword(0, "or", false), goleri.THIS),
-	goleri.NewSequence(0, goleri.THIS, goleri.NewKeyword(0, "and", false), goleri.THIS)
-)
+	goleri.NewSequence(0, goleri.THIS, goleri.NewKeyword(0, "and", false), goleri.THIS))
 grammar := goleri.NewGrammar(prio, regexp.MustCompile(`^\w+`))
 if res, err := grammar.Parse("(ni or ni) and (ni or ni)"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
