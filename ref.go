@@ -18,8 +18,11 @@ func NewRef() *Ref {
 	}
 }
 
+// IsSet returns true if an element has been set.
+func (ref *Ref) IsSet() bool { return ref.elem != nil }
+
 func (ref *Ref) String() string {
-	return fmt.Sprintf("<Ref elem:%v>", ref.elem)
+	return fmt.Sprintf("<Ref isSet:%t>", ref.IsSet())
 }
 
 // Set reference element.

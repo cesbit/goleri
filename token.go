@@ -20,6 +20,9 @@ func NewToken(gid int, token string) *Token {
 	}
 }
 
+// GetToken returns the token
+func (token *Token) GetToken() string { return token.token }
+
 func (token *Token) String() string {
 	return fmt.Sprintf("<Token gid:%d token:%v>", token.gid, token.token)
 }

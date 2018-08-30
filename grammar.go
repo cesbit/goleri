@@ -13,6 +13,9 @@ type Grammar struct {
 
 // NewGrammar returns a new grammar type.
 func NewGrammar(elem Element, reKeywords *regexp.Regexp) *Grammar {
+	if reKeywords == nil {
+		reKeywords = regexp.MustCompile(`^\w+`)
+	}
 	return &Grammar{
 		elem:       elem,
 		reKeywords: reKeywords,
