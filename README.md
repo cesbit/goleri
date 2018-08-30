@@ -96,7 +96,7 @@ func main() {
 
 ## Grammar
 
-The first Grammar parameter expects a `START` property so the parser knows where to start parsing. The second parameter of Grammar `reKeywords` is set to `nil` in the [Quick Usage](#quickusage) example. In that case goleri uses the default setting of `^\w+` which is equal to `^[A-Za-z0-9_]+`. This default property can be overwritten. (See the [example](#keyword) for keyword). Grammar has a parse method: `Parse()`.
+The first Grammar parameter expects a `START` property so the parser knows where to start parsing. The second parameter of Grammar `reKeywords` is set to `nil` in the [Quick Usage](#quickusage) example. In that case goleri uses the default setting of `^\w+` which is equal to `^[A-Za-z0-9_]+`. This default property can be overwritten. (See the [example](#keyword) of keyword). Grammar has a parse method: `Parse()`.
 
 ```go
 goleri.NewGrammar(elem Element, reKeywords *regexp.Regexp)
@@ -117,39 +117,39 @@ The `parse()` method returns a result object which has the following properties:
 
 #### IsValid
 
-`IsValid()` returns a boolean value, `True` when the given string is valid according to the given grammar, `False` when not valid.
+`IsValid()` returns a boolean value, `true` when the given string is valid according to the given grammar, `false` when not valid.
 
 Let us take the example from Quick usage.
 ```go
-if res, err := myGrammar.Parse("hi 'Iris'"); err == nil {
+if res, err := MyGrammar.Parse("hi 'Iris'"); err == nil {
 	fmt.Printf("%t\n", res.IsValid())
 ```
 
 #### Position
-`Pos` returns the position where the parser had to stop. (when `IsValid()` is `True` this value will be equal to the length of the given string)
+`Pos` returns the position where the parser had to stop. (when `IsValid()` is `true` this value will be equal to the length of the given string)
 
 Let us take the example from Quick usage.
 ```go
-if res, err := myGrammar.Parse("hi 'Iris'"); err == nil {
+if res, err := MyGrammar.Parse("hi 'Iris'"); err == nil {
 	fmt.Printf("%d\n", res.Pos())
 ```
 
 #### Tree
-`Tree()` contains the parse tree. Even when `IsValid()` is `False` the parse tree is returned but will only contain results as far as parsing has succeeded. The tree is the root node which can include several `children` nodes.
+`Tree()` contains the parse tree. Even when `IsValid()` is `false` the parse tree is returned but will only contain results as far as parsing has succeeded. The tree is the root node which can include several `children` nodes.
 
 #### Expecting
-`GetExpecting()` returns an object containing elements which goleri expects at `Pos`. Even if `IsValid` is true there might be elements in this set, for example when an `Optional` element could be added to the string. Expecting is useful if you want to implement things like auto-completion, syntax error handling, auto-syntax-correction etc.
+`GetExpecting()` returns an object containing elements which goleri expects at `Pos`. Even if `IsValid` is `true` there might be elements in this set, for example when an `Optional` element could be added to the string. Expecting is useful if you want to implement things like auto-completion, syntax error handling, and auto-syntax-correction.
 
 
 ## Elements
-Goleri has several elements which are all subclasses of [Element](#element) and can be used to create a grammar. For every element you can define a Global Identifer (gid) for identifying the element in the parse tree. But the gid is not required and should be set to 0 if not used. Every element has two corresponding methods that can be exported: `Gid()` returns the elements gid and `String()` returns a string including the gid, the element and possible nested elements like "<Keyword gid:0 keyword:hi>".
+Goleri has several elements which are all subclasses of Element and can be used to create a grammar. For every element you can define a Global Identifer (gid) for identifying the element in the parse tree. But the gid is not required and should be set to 0 if not used. Every element has two corresponding methods that can be exported: `Gid()` returns the elements gid and `String()` returns a string including the gid, the element and possible nested elements like `<Keyword gid:0 keyword:hi>`.
 
 ### Keyword
 syntax:
 ```go
 goleri.NewKeyword(gid int, keyword string, ignCase bool)
 ```
-The parser needs to match the keyword which is just a string. When matching keywords we need to tell the parser what characters are allowed in keywords. By default Goleri uses `^\w+` which is equal to `^[A-Za-z0-9_]+`. In this example below we deviate from this default to     `NewKeyword()` accepts a parameter `ignCase` to tell the parser if we should match case insensitive. The following methods return the arguments that are passed to the `NewKeyword()` method: `IsIgnCase()` returns a boolean that indicates if case is ignored and `GetKeyword()` returns the keyword.
+The parser needs to match the keyword which is just a string. When matching keywords we need to tell the parser what characters are allowed in keywords. By default Goleri uses `^\w+` which is equal to `^[A-Za-z0-9_]+`, but in the example below we overwrite the default. `NewKeyword()` accepts a parameter `ignCase` to tell the parser if we should match case insensitive. The following methods return the arguments that are passed to the `NewKeyword()` method: `IsIgnCase()` returns a boolean that indicates if case is ignored and `GetKeyword()` returns the keyword.
 
 Example:
 
@@ -170,7 +170,7 @@ syntax:
 ```go
 goleri.NewRegex(gid int, regex *regexp.Regexp)
 ```
-The parser compiles a regular expression using the `regexp` package. The `GetRegex()` method returns the regex that is passed to `NewRegex()`.
+The parser compiles a regular expression using the `regexp` package. The `GetRegex()` method in turn returns the regex that is passed to `NewRegex()`.
 
 Example:
 
@@ -189,7 +189,7 @@ syntax:
 ```go
 goleri.NewTokens(gid int, token string)
 ```
-A token can be one or more characters and is usually used to match operators like `+`, `-`, `//` and so on. When we parse a string object where goleri expects an element, it will automatically be converted to a `Token()` object. The `GetToken()` method returns the token that is passed to `NewToken()`.
+A token can be one or more characters and is usually used to match operators like `+`, `-`, `//` and so on. The `GetToken()` method in turn returns the token that is passed to `NewToken()`.
 
 Example:
 ```go
@@ -246,15 +246,15 @@ syntax:
 ```go
 goleri.NewChoice(gid int, mostGreedy bool, elements ...Element)
 ```
-The parser needs to choose between one of the given elements. Choice accepts the parameter `mostGreedy`. When `mostGreedy` is set to `false` the parser will stop at the first match. When `true` the parser will try each element and returns the longest match. Setting `mostGreedy` to `false` can provide some extra performance. Note that the parser will try to match each element in the exact same order they are parsed to Choice. The `IsMostGreedy()` method returns the boolean of mostGreedy.
+The parser needs to choose between one of the given elements. Choice accepts the parameter `mostGreedy`. When `mostGreedy` is set to `false` the parser will stop at the first match. When `true` the parser will try each element and returns the longest match. Setting `mostGreedy` to `false` can provide some extra performance. Note that the parser will try to match each element in the exact same order they are passed to `NewChoice()`. The `IsMostGreedy()` method returns the boolean of mostGreedy.
 
-Example: let us use `Choice` to modify the Quick usage example to allow the string 'bye "Iris"'
+Example: let us use Choice to modify the Quick usage example to also allow the string 'bye "Iris"'
 ```go
 choice := goleri.NewChoice(
 	0,
 	true,
 	goleri.NewKeyword(0, "hi", false),
-	goleri.NewKeyword(0, "bye", true))
+	goleri.NewKeyword(0, "bye", false))
 START := goleri.NewSequence(
 	0,
 	choice,
@@ -275,7 +275,7 @@ syntax:
 ```go
 goleri.NewRepeat(gid int, elem Element, min, max int)
 ```
-The parser needs at least `min` elements and at most `max` elements. When `max` is set to 0 we allow unlimited number of elements. `min` can be any integer value equal or higher than 0 but not larger then `max`. The following methods return the min and max arguments that are passed to the `NewRepeat()` method: `GetMin()`, `GetMax()`.
+The parser needs at least `min` elements and at most `max` elements. When `max` is set to 0 we allow unlimited number of elements. `min` can be any integer value equal or higher than 0 but not larger then `max`. The following methods return the `min` and `max` arguments that are passed to the `NewRepeat()` method: `GetMin()`, `GetMax()`.
 
 Example:
 ```go
@@ -298,7 +298,7 @@ syntax:
 ```go
 goleri.NewList(gid int, elem, delimiter Element, min, max int, optClose bool)
 ```
-List is like Repeat but with a delimiter. The delimiter must be defined as an element first, for example as a `NewToken()` or `NewKeyword()`. `min` and `max` have the same meaning as in Repeat. The parameter `optClose` can be set to `true` to allow the list to end with a delimiter. The following methods return the min and max arguments that are passed to the `NewRepeat()` method: `GetMin()`, `GetMax()`.
+List is like Repeat but with a delimiter. The delimiter must be defined as an element first, for example as a `NewToken()` or `NewKeyword()`. `min` and `max` have the same meaning as in Repeat. The parameter `optClose` can be set to `true` to allow the list to end with a delimiter. The following methods return the `min`, `max` and `optClose` arguments that are passed to the `NewRepeat()` method: `GetMin()`, `GetMax()`, `IsOptClose()`.
 
 Example:
 ```go
@@ -353,8 +353,8 @@ The grammar can make a forward reference to make recursion possible. In the exam
 >a string. This could potentially lead to an infinite loop.
 >For example:
 >```go
->r = goleri.NewRef()
->r = goleri.NewOptional(0, r)  // DON'T DO THIS
+>r := goleri.NewRef()
+>r.Set(goleri.NewOptional(0, r)) // DON'T DO THIS
 >```
 >Use [Prio](#prio) if such recursive construction is required.
 
@@ -402,6 +402,12 @@ START := goleri.NewPrio(
 grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("(ni or ni) and (ni or ni)"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%s\n", START.String()) /* <Prio gid:0 elements:[<Keyword gid:0 keyword:ni> <Sequence gid:0 elements:[<Token gid:0 token:(> <This> <Token gid:0 token:)>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:or> <This>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:and> <This>]>]> */
+	fmt.Printf("%s\n", START.String()) /* <Prio gid:0 elements:[
+											<Keyword gid:0 keyword:ni> <Sequence gid:0 elements:[
+												<Token gid:0 token:(> <This> <Token gid:0 token:)>]>
+											<Sequence gid:0 elements:[
+												<This> <Keyword gid:0 keyword:or> <This>]>
+											<Sequence gid:0 elements:[
+												<This> <Keyword gid:0 keyword:and> <This>]>]> */
 }
 ```
