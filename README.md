@@ -7,8 +7,8 @@ A left-right parser for the Go language.
   * [Related projects](#related-projects)
   * [Quick usage](#quick-usage)
   * [Grammar](#grammar)
-    * [Grammar.parse()](#parse)
-	  * [IsValid](#is_valid)
+    * [Parse](#parse)
+	  * [IsValid](#isvalid)
       * [Position](#position)
       * [Tree](#tree)
       * [Expecting](#expecting)
@@ -66,7 +66,7 @@ func MyGrammar() *goleri.Grammar {
 	name := goleri.NewRegex(GidName, regexp.MustCompile(`^(?:'(?:[^']*)')+`))
 	hi := goleri.NewKeyword(GidHi, "hi", false)
 	START := goleri.NewSequence(GidSTART, hi, name)
-	return goleri.NewGrammar(START, regexp.MustCompile(`^\w+`))
+	return goleri.NewGrammar(START, nil)
 }
 
 func main() {
@@ -95,6 +95,12 @@ func main() {
 
 
 ## Grammar
+
+The first Grammar parameter expects a `START` property so the parser knows where to start parsing. The second parameter of Grammar `reKeywords` is set to `nil` in the [Quick Usage](#quickusage) example. In that case goleri uses the default setting of `^\w+` which is equal to `^[A-Za-z0-9_]+`. This default property can be overwritten. (See the [example](#keyword) for keyword). Grammar has a parse method: `Parse()`.
+
+```go
+goleri.NewGrammar(elem Element, reKeywords *regexp.Regexp)
+```
 
 ### Parse
 syntax:
@@ -143,19 +149,19 @@ syntax:
 ```go
 goleri.NewKeyword(gid int, keyword string, ignCase bool)
 ```
-The parser needs to match the keyword which is just a string. When matching keywords we need to tell the parser what characters are allowed in keywords. By default Goleri uses `^\w+` which is equal to `^[A-Za-z0-9_]+`. `NewKeyword()` accepts a parameter `ignCase` to tell the parser if we should match case insensitive. The following methods return the arguments that are passed to the `NewKeyword()` method: `IsIgnCase()` returns a boolean that indicates if case is ignored and `GetKeyword()` returns the keyword.
+The parser needs to match the keyword which is just a string. When matching keywords we need to tell the parser what characters are allowed in keywords. By default Goleri uses `^\w+` which is equal to `^[A-Za-z0-9_]+`. In this example below we deviate from this default to     `NewKeyword()` accepts a parameter `ignCase` to tell the parser if we should match case insensitive. The following methods return the arguments that are passed to the `NewKeyword()` method: `IsIgnCase()` returns a boolean that indicates if case is ignored and `GetKeyword()` returns the keyword.
 
 Example:
 
 ```go
 // Let's allow keywords with alphabetic characters and dashes.
-tictactoe := goleri.NewKeyword(0, "tic-tac-toe", true)
-grammar := goleri.NewGrammar(tictactoe, regexp.MustCompile(`^[A-Za-z-]+`))
+START := goleri.NewKeyword(0, "tic-tac-toe", true)
+grammar := goleri.NewGrammar(START, regexp.MustCompile(`^[A-Za-z-]+`))
 if res, err := grammar.Parse("Tic-Tac-Toe"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%s\n", tictactoe.GetKeyword()) // tic-tac-toe
-	fmt.Printf("%t\n", tictactoe.IsIgnCase()) // true
-	fmt.Printf("%s\n", tictactoe.String()) // <Keyword gid:0 keyword:tic-tac-toe>
+	fmt.Printf("%s\n", START.GetKeyword()) // tic-tac-toe
+	fmt.Printf("%t\n", START.IsIgnCase()) // true
+	fmt.Printf("%s\n", START.String()) // <Keyword gid:0 keyword:tic-tac-toe>
 }
 ```
 
@@ -169,12 +175,12 @@ The parser compiles a regular expression using the `regexp` package. The `GetReg
 Example:
 
 ```go
-name := goleri.NewRegex(0, regexp.MustCompile(`^(?:'(?:[^']*)')+`))
-grammar := goleri.NewGrammar(name, regexp.MustCompile(`^\w+`))
+START := goleri.NewRegex(0, regexp.MustCompile(`^(?:'(?:[^']*)')+`))
+grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("'Iris'"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%s\n", name.GetRegex()) // ^(?:'(?:[^']*)')+
-	fmt.Printf("%s\n", name.String()) // <Regex gid:0 regex:^(?:'(?:[^']*)')+>
+	fmt.Printf("%s\n", START.GetRegex()) // ^(?:'(?:[^']*)')+
+	fmt.Printf("%s\n", START.String()) // <Regex gid:0 regex:^(?:'(?:[^']*)')+>
 }
 ```
 
@@ -187,12 +193,12 @@ A token can be one or more characters and is usually used to match operators lik
 
 Example:
 ```go
-plus := goleri.NewToken(0, "+")
-grammar := goleri.NewGrammar(plus, regexp.MustCompile(`^\w+`))
+START := goleri.NewToken(0, "+")
+grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("-"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // false
-	fmt.Printf("%s\n", plus.GetToken()) // +
-	fmt.Printf("%s\n", plus.String()) // <Token gid:0 token:+>
+	fmt.Printf("%s\n", START.GetToken()) // +
+	fmt.Printf("%s\n", START.String()) // <Token gid:0 token:+>
 }
 ```
 
@@ -205,12 +211,12 @@ Can be used to register multiple tokens at once. The `tokens` argument should be
 
 Example:
 ```go
-tokens := goleri.NewTokens(0, "== > < <= >=")
-grammar := goleri.NewGrammar(tokens, regexp.MustCompile(`^\w+`))
+START := goleri.NewTokens(0, "== > < <= >=")
+grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse(">"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%s\n", tokens.GetTokens()) // [== <= >= > <]
-	fmt.Printf("%s\n", tokens.String()) //<Tokens gid:0 tokens:[== <= >= > <]>
+	fmt.Printf("%s\n", START.GetTokens()) // [== <= >= > <]
+	fmt.Printf("%s\n", START.String()) //<Tokens gid:0 tokens:[== <= >= > <]>
 }
 ```
 
@@ -223,15 +229,15 @@ The parser needs to match each element in a sequence.
 
 Example:
 ```go
-sequence := goleri.NewSequence(
+START := goleri.NewSequence(
 	0,
 	goleri.NewKeyword(0, "tic", false),
 	goleri.NewKeyword(0, "tac", false),
 	goleri.NewKeyword(0, "toe", false))
-grammar := goleri.NewGrammar(sequence, regexp.MustCompile(`^\w+`))
+grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("tic tac toe"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%s\n", sequence.String()) /* <Sequence gid:0 elements:[<Keyword gid:0 keyword:tic> <Keyword gid:0 keyword:tac> <Keyword gid:0 keyword:toe>]> */
+	fmt.Printf("%s\n", START.String()) /* <Sequence gid:0 elements:[<Keyword gid:0 keyword:tic> <Keyword gid:0 keyword:tac> <Keyword gid:0 keyword:toe>]> */
 }
 ```
 
@@ -249,11 +255,11 @@ choice := goleri.NewChoice(
 	true,
 	goleri.NewKeyword(0, "hi", false),
 	goleri.NewKeyword(0, "bye", true))
-sequence := goleri.NewSequence(
+START := goleri.NewSequence(
 	0,
 	choice,
 	goleri.NewRegex(0, regexp.MustCompile(`^(?:'(?:[^']*)')+`)))
-grammar := goleri.NewGrammar(sequence, regexp.MustCompile(`^\w+`))
+grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("hi 'Iris'"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
 }
@@ -273,17 +279,17 @@ The parser needs at least `min` elements and at most `max` elements. When `max` 
 
 Example:
 ```go
-repeat := goleri.NewRepeat(
+START := goleri.NewRepeat(
 	0,
 	goleri.NewKeyword(0, "na", false),
 	1,
 	8)
-grammar := goleri.NewGrammar(repeat, regexp.MustCompile(`^\w+`))
+grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("na na na na na na"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%d\n", repeat.GetMin()) // 1
-	fmt.Printf("%d\n", repeat.GetMax()) // 8
-	fmt.Printf("%s\n", repeat.String()) // <Repeat gid:0 elem:<Keyword gid:0 keyword:na>>
+	fmt.Printf("%d\n", START.GetMin()) // 1
+	fmt.Printf("%d\n", START.GetMax()) // 8
+	fmt.Printf("%s\n", START.String()) // <Repeat gid:0 elem:<Keyword gid:0 keyword:na>>
 }
 ```
 
@@ -296,20 +302,20 @@ List is like Repeat but with a delimiter. The delimiter must be defined as an el
 
 Example:
 ```go
-list := goleri.NewList(
+START := goleri.NewList(
 	0,
 	goleri.NewKeyword(0, "ni", false),
 	goleri.NewToken(0, ","),
-	1,
+	0,
 	8,
 	true)
-grammar := goleri.NewGrammar(list, regexp.MustCompile(`^\w+`))
+grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("ni, ni, ni, ni,"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%d\n", list.GetMin()) // 0
-	fmt.Printf("%d\n", list.GetMax()) // 8
-	fmt.Printf("%t\n", list.IsOptClose()) // true
-	fmt.Printf("%s\n", list.String()) // <List gid:0 elem:<Keyword gid:0 keyword:ni> delimiter:<Token gid:0 token:,>>
+	fmt.Printf("%d\n", START.GetMin()) // 0
+	fmt.Printf("%d\n", START.GetMax()) // 8
+	fmt.Printf("%t\n", START.IsOptClose()) // true
+	fmt.Printf("%s\n", START.String()) // <List gid:0 elem:<Keyword gid:0 keyword:ni> delimiter:<Token gid:0 token:,>>
 }
 ```
 
@@ -325,8 +331,8 @@ Example:
 optional := goleri.NewOptional(
 	0,
 	goleri.NewRegex(0, regexp.MustCompile(`^(?:'(?:[^']*)')+`)))
-sequence := goleri.NewSequence(0, goleri.NewKeyword(0, "hi", false), optional)
-grammar := goleri.NewGrammar(sequence, regexp.MustCompile(`^\w+`))
+START := goleri.NewSequence(0, goleri.NewKeyword(0, "hi", false), optional)
+grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("hi"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
 }
@@ -366,11 +372,11 @@ START.Set(goleri.NewSequence(
 		0,
 		false),
 	goleri.NewToken(0, "]")))
-grammar := goleri.NewGrammar(START, regexp.MustCompile(`^\w+`))
+grammar := goleri.NewGrammar(START, nil)
 
 if res, err := grammar.Parse("[ni, ni, [ni, [], [ni, ni]]]"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%t\n", START.String()) // <Ref isSet:true>
+	fmt.Printf("%s\n", START.String()) // <Ref isSet:true>
 }
 ```
 
@@ -387,16 +393,15 @@ Choose the first match from the prio elements and allow `THIS` for recursive ope
 
 Example:
 ```go
-ni := goleri.NewKeyword(0, "ni", false)
-prio := goleri.NewPrio(
+START := goleri.NewPrio(
 	0,
-	ni,
+	goleri.NewKeyword(0, "ni", false),
 	goleri.NewSequence(0, goleri.NewToken(0, "("), goleri.THIS, goleri.NewToken(0, ")")),
 	goleri.NewSequence(0, goleri.THIS, goleri.NewKeyword(0, "or", false), goleri.THIS),
 	goleri.NewSequence(0, goleri.THIS, goleri.NewKeyword(0, "and", false), goleri.THIS))
-grammar := goleri.NewGrammar(prio, regexp.MustCompile(`^\w+`))
+grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("(ni or ni) and (ni or ni)"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%s\n", prio.String()) /* <Prio gid:0 elements:[<Keyword gid:0 keyword:ni> <Sequence gid:0 elements:[<Token gid:0 token:(> <This> <Token gid:0 token:)>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:or> <This>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:and> <This>]>]> */
+	fmt.Printf("%s\n", START.String()) /* <Prio gid:0 elements:[<Keyword gid:0 keyword:ni> <Sequence gid:0 elements:[<Token gid:0 token:(> <This> <Token gid:0 token:)>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:or> <This>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:and> <This>]>]> */
 }
 ```
