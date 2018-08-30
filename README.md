@@ -403,11 +403,11 @@ grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("(ni or ni) and (ni or ni)"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
 	fmt.Printf("%s\n", START.String()) /* <Prio gid:0 elements:[
-											<Keyword gid:0 keyword:ni> <Sequence gid:0 elements:[
-												<Token gid:0 token:(> <This> <Token gid:0 token:)>]>
-											<Sequence gid:0 elements:[
-												<This> <Keyword gid:0 keyword:or> <This>]>
-											<Sequence gid:0 elements:[
-												<This> <Keyword gid:0 keyword:and> <This>]>]> */
+	<Keyword gid:0 keyword:ni> <Sequence gid:0 elements:[
+		<Token gid:0 token:(> <This> <Token gid:0 token:)>]>
+	<Sequence gid:0 elements:[
+		<This> <Keyword gid:0 keyword:or> <This>]>
+	<Sequence gid:0 elements:[
+		<This> <Keyword gid:0 keyword:and> <This>]>]> */
 }
 ```
