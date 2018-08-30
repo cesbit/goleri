@@ -47,6 +47,9 @@ func TestKeyword(t *testing.T) {
 	assertEquals(t, "<Keyword gid:0 keyword:hi>", hi.String())
 	assertEquals(t, []Element{}, parse(t, grammar, "hi").GetExpecting())
 	assertEquals(t, []Element{hi}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 2, parse(t, grammar, "hi").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "hi").Tree().String())
 }
 
 func TestKeywordIgnCase(t *testing.T) {
@@ -81,6 +84,9 @@ func TestSequence(t *testing.T) {
 	assertEquals(t, []Element{}, parse(t, grammar, "hi iris").GetExpecting())
 	assertEquals(t, []Element{iris}, parse(t, grammar, "hi").GetExpecting())
 	assertEquals(t, []Element{hi}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 7, parse(t, grammar, "hi iris").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "hi iris").Tree().String())
 }
 
 func TestChoiceMostGreedy(t *testing.T) {
@@ -100,6 +106,9 @@ func TestChoiceMostGreedy(t *testing.T) {
 	assertEquals(t, []Element{}, parse(t, grammar, "hi iris").GetExpecting())
 	assertEquals(t, []Element{iris}, parse(t, grammar, "hi").GetExpecting())
 	assertEquals(t, []Element{hi}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 2, parse(t, grammar, "hi").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "hi").Tree().String())
 }
 
 func TestChoiceFirstMatch(t *testing.T) {
@@ -134,6 +143,9 @@ func TestOptional(t *testing.T) {
 	assertEquals(t, "<Optional gid:0 elem:<Keyword gid:0 keyword:hi>>", optional.String())
 	assertEquals(t, []Element{}, parse(t, grammar, "hi").GetExpecting())
 	assertEquals(t, []Element{hi}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 2, parse(t, grammar, "hi").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "hi").Tree().String())
 }
 
 func TestToken(t *testing.T) {
@@ -150,6 +162,9 @@ func TestToken(t *testing.T) {
 	assertEquals(t, "<Token gid:0 token:+>", token.String())
 	assertEquals(t, []Element{}, parse(t, grammar, "+").GetExpecting())
 	assertEquals(t, []Element{token}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 1, parse(t, grammar, "+").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "+").Tree().String())
 }
 
 func TestTokenMultiChars(t *testing.T) {
@@ -165,6 +180,28 @@ func TestTokenMultiChars(t *testing.T) {
 	assertEquals(t, "<Token gid:0 token:+=>", token.String())
 	assertEquals(t, []Element{}, parse(t, grammar, "+=").GetExpecting())
 	assertEquals(t, []Element{token}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 2, parse(t, grammar, "+=").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "+=").Tree().String())
+}
+
+func TestTokens(t *testing.T) {
+	tokens := NewTokens(0, "== != >=   >   < <=")
+	grammar := NewGrammar(tokens, nil)
+
+	// assert statements
+	assertEquals(t, 0, tokens.Gid())
+	assertEquals(t, []string{"==", "!=", ">=", "<=", ">", "<"}, tokens.GetTokens()) // ??
+	assertEquals(t, true, parse(t, grammar, "==").IsValid())
+	assertEquals(t, true, parse(t, grammar, "<=").IsValid())
+	assertEquals(t, true, parse(t, grammar, ">").IsValid())
+	assertEquals(t, false, parse(t, grammar, "").IsValid())
+	assertEquals(t, "<Tokens gid:0 tokens:[== != >= <= > <]>", tokens.String())
+	assertEquals(t, []Element{}, parse(t, grammar, "==").GetExpecting())
+	assertEquals(t, []Element{tokens}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 2, parse(t, grammar, "==").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "==").Tree().String())
 }
 
 func TestList(t *testing.T) {
@@ -189,6 +226,9 @@ func TestList(t *testing.T) {
 	assertEquals(t, "<List gid:0 elem:<Keyword gid:0 keyword:hi> delimiter:<Token gid:0 token:,>>", list.String())
 	assertEquals(t, []Element{token}, parse(t, grammar, "hi").GetExpecting())
 	assertEquals(t, []Element{hi}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 10, parse(t, grammar, "hi, hi, hi").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "hi, hi, hi").Tree().String())
 }
 
 func TestListEndDelimiter(t *testing.T) {
@@ -229,22 +269,9 @@ func TestRepeat(t *testing.T) {
 	assertEquals(t, "<Repeat gid:0 elem:<Keyword gid:0 keyword:hi>>", repeat.String())
 	assertEquals(t, []Element{hi}, parse(t, grammar, "hi").GetExpecting())
 	assertEquals(t, []Element{hi}, parse(t, grammar, "").GetExpecting())
-}
-
-func TestTokens(t *testing.T) {
-	tokens := NewTokens(0, "== != >=   >   < <=")
-	grammar := NewGrammar(tokens, nil)
-
-	// assert statements
-	assertEquals(t, 0, tokens.Gid())
-	assertEquals(t, []string{"==", "!=", ">=", "<=", ">", "<"}, tokens.GetTokens()) // ??
-	assertEquals(t, true, parse(t, grammar, "==").IsValid())
-	assertEquals(t, true, parse(t, grammar, "<=").IsValid())
-	assertEquals(t, true, parse(t, grammar, ">").IsValid())
-	assertEquals(t, false, parse(t, grammar, "").IsValid())
-	assertEquals(t, "<Tokens gid:0 tokens:[== != >= <= > <]>", tokens.String())
-	assertEquals(t, []Element{}, parse(t, grammar, "==").GetExpecting())
-	assertEquals(t, []Element{tokens}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 8, parse(t, grammar, "hi hi hi").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "hi hi hi").Tree().String())
 }
 
 func TestRegex(t *testing.T) {
@@ -264,6 +291,10 @@ func TestRegex(t *testing.T) {
 	assertEquals(t, "<Regex gid:0 regex:^(/[^/\\\\]*(?:\\\\.[^/\\\\]*)*/i?)>", regex.String())
 	assertEquals(t, []Element{}, parse(t, grammar, "/hi/i").GetExpecting())
 	assertEquals(t, []Element{}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 5, parse(t, grammar, "/hi/i").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "/hi/i").Tree().String())
+
 }
 
 func TestRef(t *testing.T) {
@@ -284,6 +315,10 @@ func TestRef(t *testing.T) {
 	assertEquals(t, "<Ref isSet:true>", ref.String())
 	assertEquals(t, []Element{}, parse(t, grammar, "hi").GetExpecting())
 	assertEquals(t, []Element{hi}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 2, parse(t, grammar, "hi").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "hi").Tree().String())
+
 }
 
 func TestPrio(t *testing.T) {
@@ -310,4 +345,7 @@ func TestPrio(t *testing.T) {
 	_, err := grammar.Parse("(((((((((((((((((((((((((((((((((((((((((((((((((((hi)))))))))))))))))))))))))))))))))))))))))))))))))))")
 	assertEquals(t, fmt.Errorf("max recursion depth (50) is reached"), err)
 	assertEquals(t, "<Prio gid:1 elements:[<Keyword gid:0 keyword:hi> <Keyword gid:0 keyword:bye> <Sequence gid:0 elements:[<Token gid:0 token:(> <This> <Token gid:0 token:)>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:or> <This>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:and> <This>]>]>", prio.String())
+	assertEquals(t, 0, parse(t, grammar, "").Pos())
+	assertEquals(t, 25, parse(t, grammar, "(hi or hi) and (hi or hi)").Pos())
+	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "(hi or hi) and (hi or hi)").Tree().String())
 }

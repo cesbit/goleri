@@ -149,7 +149,7 @@ syntax:
 ```go
 goleri.NewKeyword(gid int, keyword string, ignCase bool)
 ```
-The parser needs to match the keyword which is just a string. When matching keywords we need to tell the parser what characters are allowed in keywords. By default Goleri uses `^\w+` which is equal to `^[A-Za-z0-9_]+`, but in the example below we overwrite the default. `NewKeyword()` accepts a parameter `ignCase` to tell the parser if we should match case insensitive. The following methods return the arguments that are passed to the `NewKeyword()` method: `IsIgnCase()` returns a boolean that indicates if case is ignored and `GetKeyword()` returns the keyword.
+The parser needs to match the keyword which is just a string. When matching keywords we need to tell the parser what characters are allowed in keywords. By default goleri uses `^\w+` which is equal to `^[A-Za-z0-9_]+`, but in the example below we overwrite the default. `NewKeyword()` accepts a parameter `ignCase` to tell the parser if we should match case insensitive. The following methods in turn return the arguments that are passed to the `NewKeyword()` method: `IsIgnCase()` returns a boolean that indicates if case is ignored and `GetKeyword()` returns the keyword.
 
 Example:
 
@@ -402,12 +402,6 @@ START := goleri.NewPrio(
 grammar := goleri.NewGrammar(START, nil)
 if res, err := grammar.Parse("(ni or ni) and (ni or ni)"); err == nil {
 	fmt.Printf("%t\n", res.IsValid()) // true
-	fmt.Printf("%s\n", START.String()) /* <Prio gid:0 elements:[
-							<Keyword gid:0 keyword:ni> <Sequence gid:0 elements:[
-								<Token gid:0 token:(> <This> <Token gid:0 token:)>]>
-							<Sequence gid:0 elements:[
-								<This> <Keyword gid:0 keyword:or> <This>]>
-							<Sequence gid:0 elements:[
-								<This> <Keyword gid:0 keyword:and> <This>]>]> */
+	fmt.Printf("%s\n", START.String()) /* <Prio gid:0 elements:[<Keyword gid:0 keyword:ni> <Sequence gid:0 elements:[<Token gid:0 token:(> <This> <Token gid:0 token:)>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:or> <This>]> <Sequence gid:0 elements:[<This> <Keyword gid:0 keyword:and> <This>]>]> */
 }
 ```
