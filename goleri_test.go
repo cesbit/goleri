@@ -275,12 +275,12 @@ func TestRepeat(t *testing.T) {
 }
 
 func TestRegex(t *testing.T) {
-	regex := NewRegex(0, regexp.MustCompile("^(/[^/\\\\]*(?:\\\\.[^/\\\\]*)*/i?)"))
+	regex := NewRegex(0, regexp.MustCompile(`^(/[^/\\]*(?:\\.[^/\\]*)*/i?)`))
 	grammar := NewGrammar(regex, nil)
 
 	// assert statements
 	assertEquals(t, 0, regex.Gid())
-	assertEquals(t, regexp.MustCompile("^(/[^/\\\\]*(?:\\\\.[^/\\\\]*)*/i?)"), regex.GetRegex()) // ??
+	assertEquals(t, regexp.MustCompile(`^(/[^/\\]*(?:\\.[^/\\]*)*/i?)`), regex.GetRegex()) // ??
 	assertEquals(t, true, parse(t, grammar, "/hi/").IsValid())
 	assertEquals(t, true, parse(t, grammar, "/hi/i").IsValid())
 	assertEquals(t, true, parse(t, grammar, " //i").IsValid())
@@ -288,7 +288,7 @@ func TestRegex(t *testing.T) {
 	assertEquals(t, false, parse(t, grammar, "/hi//hi/i").IsValid())
 	assertEquals(t, false, parse(t, grammar, "//x").IsValid())
 	assertEquals(t, false, parse(t, grammar, "").IsValid())
-	assertEquals(t, "<Regex gid:0 regex:^(/[^/\\\\]*(?:\\\\.[^/\\\\]*)*/i?)>", regex.String())
+	assertEquals(t, `<Regex gid:0 regex:^(/[^/\\]*(?:\\.[^/\\]*)*/i?)>`, regex.String())
 	assertEquals(t, []Element{}, parse(t, grammar, "/hi/i").GetExpecting())
 	assertEquals(t, []Element{}, parse(t, grammar, "").GetExpecting())
 	assertEquals(t, 0, parse(t, grammar, "").Pos())
