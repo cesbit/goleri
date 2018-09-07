@@ -34,7 +34,7 @@ func NewTokens(gid int, tokens string) *Tokens {
 	}
 }
 
-// GetToken returns the token
+// GetTokens returns the token
 func (tokens *Tokens) GetTokens() []string { return tokens.tokens }
 
 func (tokens *Tokens) String() string {
