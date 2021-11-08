@@ -21,7 +21,7 @@ func (sequence *Sequence) String() string {
 }
 
 func (sequence *Sequence) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
-	nd := newNode(sequence, parent.end)
+	nd := newNode(sequence, parent.End)
 
 	for _, elem := range sequence.elements {
 		n, err := p.walk(nd, elem, r, modeRequired)

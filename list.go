@@ -39,7 +39,7 @@ func (list *List) String() string {
 
 func (list *List) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
-	nd := newNode(list, parent.end)
+	nd := newNode(list, parent.End)
 	i := 0
 	j := 0
 	for {

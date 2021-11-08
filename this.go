@@ -15,16 +15,16 @@ func (t This) String() string {
 func (t *This) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	var nd *Node
 	var ok bool
-	if nd, ok = r.tested[parent.end]; !ok {
-		nd = newNode(t, parent.end)
+	if nd, ok = r.tested[parent.End]; !ok {
+		nd = newNode(t, parent.End)
 
-		r.tested[parent.end] = nil
+		r.tested[parent.End] = nil
 
 		n, err := p.walk(nd, r.root, r, modeRequired)
 		if n == nil || err != nil {
 			return nil, err
 		}
-		r.tested[parent.end] = n
+		r.tested[parent.End] = n
 	}
 
 	if nd != nil {

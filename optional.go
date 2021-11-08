@@ -21,7 +21,7 @@ func (optional *Optional) String() string {
 }
 
 func (optional *Optional) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
-	nd := newNode(optional, parent.end)
+	nd := newNode(optional, parent.End)
 	n, err := p.walk(nd, optional.elem, r, modeOptional)
 
 	if err != nil {

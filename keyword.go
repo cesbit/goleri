@@ -34,7 +34,7 @@ func (keyword *Keyword) String() string {
 func (keyword *Keyword) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	var match bool
 	var nd *Node
-	s := p.getKeyword(parent.end)
+	s := p.getKeyword(parent.End)
 
 	if keyword.ignCase {
 		match = strings.EqualFold(s, keyword.keyword)
@@ -43,11 +43,11 @@ func (keyword *Keyword) parse(p *parser, parent *Node, r *ruleStore) (*Node, err
 	}
 
 	if match {
-		nd = newNode(keyword, parent.end)
-		nd.end = parent.end + len(keyword.keyword)
+		nd = newNode(keyword, parent.End)
+		nd.End = parent.End + len(keyword.keyword)
 		p.appendChild(parent, nd)
 	} else {
-		p.expect.update(keyword, parent.end)
+		p.expect.update(keyword, parent.End)
 	}
 	return nd, nil
 }

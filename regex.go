@@ -30,11 +30,11 @@ func (regex *Regex) String() string {
 
 func (regex *Regex) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	var nd *Node
-	s := p.s[parent.end:]
+	s := p.s[parent.End:]
 	m := regex.regex.FindStringIndex(s)
 	if m != nil && m[0] == 0 {
-		nd = newNode(regex, parent.end)
-		nd.end = parent.end + m[1]
+		nd = newNode(regex, parent.End)
+		nd.End = parent.End + m[1]
 		p.appendChild(parent, nd)
 	}
 	return nd, nil
