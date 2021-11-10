@@ -16,6 +16,18 @@ type Node struct {
 func (n *Node) String() string {
 	return fmt.Sprintf("<Node elem:%v children:%d>", n.elem, len(n.children))
 }
+func (n *Node) GetElement() Element {
+	return n.elem
+}
+func (n *Node) GetStart() int {
+	return n.start
+}
+func (n *Node) GetEnd() int {
+	return n.end
+}
+func (n *Node) GetChildren() []*Node {
+	return n.children
+}
 
 func newNode(elem Element, start int) *Node {
 	return &Node{
