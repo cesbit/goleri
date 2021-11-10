@@ -26,7 +26,7 @@ func (rule *Rule) String() string {
 
 func (rule *Rule) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
-	nd := newNode(rule, parent.End)
+	nd := newNode(rule, parent.end)
 
 	rs := ruleStore{make(map[int]*Node), rule.elem, 0}
 
@@ -41,12 +41,12 @@ func (rule *Rule) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 }
 
 func (r *ruleStore) update(nd *Node) {
-	if n, ok := r.tested[nd.Start]; ok {
-		if n == nil || nd.End > n.End {
-			r.tested[nd.Start] = nd
+	if n, ok := r.tested[nd.start]; ok {
+		if n == nil || nd.end > n.end {
+			r.tested[nd.start] = nd
 			return
 		}
 	} else {
-		r.tested[nd.Start] = nd
+		r.tested[nd.start] = nd
 	}
 }

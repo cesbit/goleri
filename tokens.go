@@ -48,7 +48,7 @@ func (tokens *Tokens) parse(p *parser, parent *Node, r *ruleStore) (*Node, error
 	for _, token := range tokens.tokens {
 		match = true
 		tokenLen = len(token)
-		for i, j := 0, parent.End; i < tokenLen; i++ {
+		for i, j := 0, parent.end; i < tokenLen; i++ {
 			if j == p.l || p.s[j] != token[i] {
 				match = false
 				break
@@ -61,11 +61,11 @@ func (tokens *Tokens) parse(p *parser, parent *Node, r *ruleStore) (*Node, error
 	}
 
 	if match {
-		nd = newNode(tokens, parent.End)
-		nd.End = parent.End + tokenLen
+		nd = newNode(tokens, parent.end)
+		nd.end = parent.end + tokenLen
 		p.appendChild(parent, nd)
 	} else {
-		p.expect.update(tokens, parent.End)
+		p.expect.update(tokens, parent.end)
 	}
 
 	return nd, nil

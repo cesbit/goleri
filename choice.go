@@ -37,12 +37,12 @@ func (choice *Choice) parseMostGreedy(p *parser, parent *Node, r *ruleStore) (*N
 	var nd *Node
 
 	for _, elem := range choice.elements {
-		nd = newNode(choice, parent.End)
+		nd = newNode(choice, parent.end)
 		n, err := p.walk(nd, elem, r, modeRequired)
 		if err != nil {
 			return nil, err
 		}
-		if n != nil && (mgNode == nil || nd.End > mgNode.End) {
+		if n != nil && (mgNode == nil || nd.end > mgNode.end) {
 			mgNode = nd
 		}
 	}
@@ -59,7 +59,7 @@ func (choice *Choice) parseFirst(p *parser, parent *Node, r *ruleStore) (*Node, 
 	var nd *Node
 
 	for _, elem := range choice.elements {
-		nd = newNode(choice, parent.End)
+		nd = newNode(choice, parent.end)
 		n, err := p.walk(nd, elem, r, modeRequired)
 
 		if err != nil {

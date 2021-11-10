@@ -24,12 +24,12 @@ func newParser(s string, reKeywords *regexp.Regexp) *parser {
 }
 
 func (p *parser) walk(parent *Node, elem Element, r *ruleStore, mode uint8) (*Node, error) {
-	for parent.End < p.l && unicode.IsSpace(rune(p.s[parent.End])) {
-		parent.End++
+	for parent.end < p.l && unicode.IsSpace(rune(p.s[parent.end])) {
+		parent.end++
 	}
 
 	/* set expecting mode */
-	p.expect.setMode(parent.Start, mode)
+	p.expect.setMode(parent.start, mode)
 
 	return elem.parse(p, parent, r)
 }
@@ -44,9 +44,9 @@ func (p *parser) getKeyword(pos int) string {
 }
 
 func (p *parser) appendChild(parent, child *Node) {
-	if child.End > p.expect.pos {
+	if child.end > p.expect.pos {
 		p.expect.empty()
 	}
-	parent.End = child.End
-	parent.Children = append(parent.Children, child)
+	parent.end = child.end
+	parent.children = append(parent.children, child)
 }

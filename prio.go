@@ -33,7 +33,7 @@ func (prio *Prio) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	r.depth++
 
 	for _, elem := range prio.elements {
-		nd := newNode(prio, parent.End)
+		nd := newNode(prio, parent.end)
 		n, err := p.walk(nd, elem, r, modeRequired)
 
 		if err != nil {
@@ -45,7 +45,7 @@ func (prio *Prio) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 		}
 	}
 
-	if nd, ok := r.tested[parent.End]; ok && nd != nil {
+	if nd, ok := r.tested[parent.end]; ok && nd != nil {
 		p.appendChild(parent, nd)
 		return nd, nil
 	}

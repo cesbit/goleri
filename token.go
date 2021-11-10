@@ -30,7 +30,7 @@ func (token *Token) String() string {
 func (token *Token) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	var nd *Node
 	match := true
-	for i, j := 0, parent.End; i < token.l; i++ {
+	for i, j := 0, parent.end; i < token.l; i++ {
 		if j == p.l || p.s[j] != token.token[i] {
 			match = false
 			break
@@ -39,11 +39,11 @@ func (token *Token) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) 
 	}
 
 	if match {
-		nd = newNode(token, parent.End)
-		nd.End = parent.End + token.l
+		nd = newNode(token, parent.end)
+		nd.end = parent.end + token.l
 		p.appendChild(parent, nd)
 	} else {
-		p.expect.update(token, parent.End)
+		p.expect.update(token, parent.end)
 	}
 
 	return nd, nil

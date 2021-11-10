@@ -6,22 +6,22 @@ import (
 
 // Node is part or a result tree.
 type Node struct {
-	Elem     Element
-	Start    int
-	End      int
-	Children []*Node
+	elem     Element
+	start    int
+	end      int
+	children []*Node
 	Data     interface{} // nil, free to use for anything you like
 }
 
 func (n *Node) String() string {
-	return fmt.Sprintf("<Node elem:%v children:%d>", n.Elem, len(n.Children))
+	return fmt.Sprintf("<Node elem:%v children:%d>", n.elem, len(n.children))
 }
 
 func newNode(elem Element, start int) *Node {
 	return &Node{
-		Elem:  elem,
-		Start: start,
-		End:   start,
+		elem:  elem,
+		start: start,
+		end:   start,
 		Data:  nil,
 	}
 }

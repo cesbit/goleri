@@ -41,7 +41,7 @@ func (g *Grammar) Parse(s string) (*Result, error) {
 		end--
 	}
 
-	if nd.End < end {
+	if nd.end < end {
 		pr.isValid = false
 	}
 
@@ -51,9 +51,9 @@ func (g *Grammar) Parse(s string) (*Result, error) {
 		pr.pos = p.expect.pos
 	}
 
-	if nd.End < end && len(p.expect.required) == 0 {
-		p.expect.setMode(nd.End, modeRequired)
-		p.expect.update(EOS, nd.End)
+	if nd.end < end && len(p.expect.required) == 0 {
+		p.expect.setMode(nd.end, modeRequired)
+		p.expect.update(EOS, nd.end)
 	}
 
 	return pr, nil
