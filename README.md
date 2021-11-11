@@ -1,3 +1,7 @@
+[![CI](https://github.com/transceptor-technology/goleri/workflows/CI/badge.svg)](https://github.com/transceptor-technology/goleri/actions)
+[![Release Version](https://img.shields.io/github/release/transceptor-technology/goleri)](https://github.com/transceptor-technology/goleri/releases)
+
+
 # GoLeRi
 
 A left-right parser for the Go language.
