@@ -36,6 +36,8 @@ func (regex *Regex) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) 
 		nd = newNode(regex, parent.end)
 		nd.end = parent.end + m[1]
 		p.appendChild(parent, nd)
+	} else {
+		p.expect.update(regex, parent.end)
 	}
 	return nd, nil
 }
