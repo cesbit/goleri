@@ -290,7 +290,7 @@ func TestRegex(t *testing.T) {
 	assertEquals(t, false, parse(t, grammar, "").IsValid())
 	assertEquals(t, `<Regex gid:0 regex:^(/[^/\\]*(?:\\.[^/\\]*)*/i?)>`, regex.String())
 	assertEquals(t, []Element{}, parse(t, grammar, "/hi/i").GetExpecting())
-	assertEquals(t, []Element{}, parse(t, grammar, "").GetExpecting())
+	assertEquals(t, []Element{regex}, parse(t, grammar, "").GetExpecting())
 	assertEquals(t, 0, parse(t, grammar, "").Pos())
 	assertEquals(t, 5, parse(t, grammar, "/hi/i").Pos())
 	assertEquals(t, "<Node elem:<nil> children:1>", parse(t, grammar, "/hi/i").Tree().String())
