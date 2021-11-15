@@ -21,21 +21,6 @@ func (r *Result) GetExpecting() []Element {
 }
 
 // Tree returns the node tree.
-func (r *Result) Tree() *Node {
-	r.assignExpressionParts()
-	return r.tree
-}
+func (r *Result) Tree() *Node { return r.tree }
 
-func (r *Result) assignExpressionParts() {
-	var walk func(n *Node)
-	walk = func(n *Node) {
-		if n == nil {
-			return
-		}
-		n.Data = r.expression[n.start:n.end]
-		for _, c := range n.children {
-			walk(c)
-		}
-	}
-	walk(r.tree)
-}
+

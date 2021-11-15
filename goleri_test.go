@@ -254,19 +254,6 @@ func TestListEndDelimiter(t *testing.T) {
 	assertEquals(t, []Element{hi}, parse(t, grammar, "").GetExpecting())
 }
 
-func TestChildren(t *testing.T) {
-	grammar := NewGrammar(NewSequence(0, NewKeyword(0, "hi", true), NewKeyword(0, "iris", true)), nil)
-	assertEquals(t, true, parse(t, grammar, "hi iris").IsValid())
-	assertEquals(t, false, parse(t, grammar, "hi iris").Tree().Data == nil)
-	assertEquals(t, "hi iris", parse(t, grammar, "hi iris").Tree().Data.(string))
-	// the root node has 1 child containing the sequence
-	assertEquals(t, 1, len(parse(t, grammar, "hi iris").Tree().GetChildren()))
-	assertEquals(t, false, parse(t, grammar, "hi iris").Tree().GetChildren()[0].Data == nil)
-	assertEquals(t, 2, len(parse(t, grammar, "hi iris").Tree().GetChildren()[0].GetChildren()))
-	assertEquals(t, "hi", parse(t, grammar, "hi iris").Tree().GetChildren()[0].GetChildren()[0].Data.(string))
-	assertEquals(t, false, parse(t, grammar, "hi iris").Tree().GetChildren()[0].GetChildren()[1].Data == nil)
-	assertEquals(t, "iris", parse(t, grammar, "hi iris").Tree().GetChildren()[0].GetChildren()[1].Data.(string))
-}
 
 func TestRepeat(t *testing.T) {
 	hi := NewKeyword(0, "hi", true)
