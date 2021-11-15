@@ -20,6 +20,10 @@ func (sequence *Sequence) String() string {
 	return fmt.Sprintf("<Sequence gid:%d elements:%v>", sequence.gid, sequence.elements)
 }
 
+func (sequence *Sequence) Text() string {
+	return fmt.Sprintf("%v",sequence.elements)
+}
+
 func (sequence *Sequence) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	nd := newNode(sequence, parent.end)
 

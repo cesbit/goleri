@@ -37,6 +37,10 @@ func (list *List) String() string {
 	return fmt.Sprintf("<List gid:%d elem:%v delimiter:%v>", list.gid, list.elem, list.delimiter)
 }
 
+func (list *List) Text() string {
+	return fmt.Sprintf("%v",list.elem)
+}
+
 func (list *List) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
 	nd := newNode(list, parent.end)

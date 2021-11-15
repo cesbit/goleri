@@ -30,6 +30,10 @@ func (repeat *Repeat) String() string {
 	return fmt.Sprintf("<Repeat gid:%d elem:%v>", repeat.gid, repeat.elem)
 }
 
+func (repeat *Repeat) Text() string {
+	return fmt.Sprintf("%v",repeat.elem)
+}
+
 func (repeat *Repeat) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
 	nd := newNode(repeat, parent.end)

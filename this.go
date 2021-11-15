@@ -12,6 +12,10 @@ func (t This) String() string {
 	return "<This>"
 }
 
+func (t This) Text() string {
+	return "<This>"
+}
+
 func (t *This) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	var nd *Node
 	var ok bool
