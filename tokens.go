@@ -42,7 +42,7 @@ func (tokens *Tokens) String() string {
 }
 
 func (tokens *Tokens) Text() string {
-	return fmt.Sprintf("%v",tokens.tokens)
+	return fmt.Sprintf("%v", tokens.tokens)
 }
 
 func (tokens *Tokens) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {

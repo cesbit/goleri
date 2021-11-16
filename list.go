@@ -38,7 +38,7 @@ func (list *List) String() string {
 }
 
 func (list *List) Text() string {
-	return fmt.Sprintf("%v",list.elem)
+	return fmt.Sprintf("%v", list.elem)
 }
 
 func (list *List) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {

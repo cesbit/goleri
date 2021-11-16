@@ -29,7 +29,7 @@ func (regex *Regex) String() string {
 }
 
 func (regex *Regex) Text() string {
-	return fmt.Sprintf("%v",regex.regex)
+	return fmt.Sprintf("%v", regex.regex)
 }
 
 func (regex *Regex) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {

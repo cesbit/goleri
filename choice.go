@@ -26,7 +26,7 @@ func (choice *Choice) String() string {
 }
 
 func (choice *Choice) Text() string {
-	return fmt.Sprintf("%v",choice.elements)
+	return fmt.Sprintf("%v", choice.elements)
 }
 
 func (choice *Choice) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {

@@ -21,7 +21,7 @@ func (sequence *Sequence) String() string {
 }
 
 func (sequence *Sequence) Text() string {
-	return fmt.Sprintf("%v",sequence.elements)
+	return fmt.Sprintf("%v", sequence.elements)
 }
 
 func (sequence *Sequence) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {

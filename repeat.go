@@ -31,7 +31,7 @@ func (repeat *Repeat) String() string {
 }
 
 func (repeat *Repeat) Text() string {
-	return fmt.Sprintf("%v",repeat.elem)
+	return fmt.Sprintf("%v", repeat.elem)
 }
 
 func (repeat *Repeat) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {

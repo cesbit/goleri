@@ -25,7 +25,7 @@ func (prio *Prio) String() string {
 }
 
 func (prio *Prio) Text() string {
-	return fmt.Sprintf("%v",prio.elements)
+	return fmt.Sprintf("%v", prio.elements)
 }
 
 func (prio *Prio) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
