@@ -24,6 +24,10 @@ func (rule *Rule) String() string {
 	return rule.elem.String()
 }
 
+func (rule *Rule) Text() string {
+	return rule.elem.String()
+}
+
 func (rule *Rule) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
 	nd := newNode(rule, parent.end)

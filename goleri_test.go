@@ -160,6 +160,7 @@ func TestToken(t *testing.T) {
 	assertEquals(t, false, parse(t, grammar, "++").IsValid())
 	assertEquals(t, false, parse(t, grammar, "").IsValid())
 	assertEquals(t, "<Token gid:0 token:+>", token.String())
+	assertEquals(t, "+", token.Text())
 	assertEquals(t, []Element{}, parse(t, grammar, "+").GetExpecting())
 	assertEquals(t, []Element{token}, parse(t, grammar, "").GetExpecting())
 	assertEquals(t, 0, parse(t, grammar, "").Pos())
@@ -178,6 +179,7 @@ func TestTokenMultiChars(t *testing.T) {
 	assertEquals(t, false, parse(t, grammar, "+").IsValid())
 	assertEquals(t, false, parse(t, grammar, "").IsValid())
 	assertEquals(t, "<Token gid:0 token:+=>", token.String())
+	assertEquals(t, "+=", token.Text())
 	assertEquals(t, []Element{}, parse(t, grammar, "+=").GetExpecting())
 	assertEquals(t, []Element{token}, parse(t, grammar, "").GetExpecting())
 	assertEquals(t, 0, parse(t, grammar, "").Pos())
@@ -251,6 +253,7 @@ func TestListEndDelimiter(t *testing.T) {
 	assertEquals(t, []Element{token}, parse(t, grammar, "hi").GetExpecting())
 	assertEquals(t, []Element{hi}, parse(t, grammar, "").GetExpecting())
 }
+
 
 func TestRepeat(t *testing.T) {
 	hi := NewKeyword(0, "hi", true)

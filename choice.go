@@ -25,6 +25,10 @@ func (choice *Choice) String() string {
 	return fmt.Sprintf("<Choice gid:%d elements:%v>", choice.gid, choice.elements)
 }
 
+func (choice *Choice) Text() string {
+	return fmt.Sprintf("%v",choice.elements)
+}
+
 func (choice *Choice) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	if choice.mostGreedy {
 		return choice.parseMostGreedy(p, parent, r)

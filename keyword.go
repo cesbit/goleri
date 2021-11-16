@@ -31,6 +31,10 @@ func (keyword *Keyword) String() string {
 	return fmt.Sprintf("<Keyword gid:%d keyword:%v>", keyword.gid, keyword.keyword)
 }
 
+func (keyword *Keyword) Text() string {
+	return fmt.Sprintf(keyword.keyword)
+}
+
 func (keyword *Keyword) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	var match bool
 	var nd *Node

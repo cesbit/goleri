@@ -28,6 +28,10 @@ func (regex *Regex) String() string {
 	return fmt.Sprintf("<Regex gid:%d regex:%v>", regex.gid, regex.regex)
 }
 
+func (regex *Regex) Text() string {
+	return fmt.Sprintf("%v",regex.regex)
+}
+
 func (regex *Regex) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	var nd *Node
 	s := p.s[parent.end:]
