@@ -33,7 +33,7 @@ func (g *Grammar) Parse(s string) (*Result, error) {
 		return nil, err
 	}
 
-	pr = &Result{n != nil, 0, p.expect, nd}
+	pr = &Result{n != nil, 0, p.expect, nd, s}
 	end := p.l
 
 	// ignore white space at end

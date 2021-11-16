@@ -25,6 +25,10 @@ func (ref *Ref) String() string {
 	return fmt.Sprintf("<Ref isSet:%t>", ref.IsSet())
 }
 
+func (ref *Ref) Text() string {
+	return fmt.Sprintf("%t", ref.IsSet())
+}
+
 // Set reference element.
 func (ref *Ref) Set(elem Element) {
 	ref.elem = elem

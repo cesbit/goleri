@@ -41,6 +41,10 @@ func (tokens *Tokens) String() string {
 	return fmt.Sprintf("<Tokens gid:%d tokens:%v>", tokens.gid, tokens.tokens)
 }
 
+func (tokens *Tokens) Text() string {
+	return fmt.Sprintf("%v", tokens.tokens)
+}
+
 func (tokens *Tokens) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 	var nd *Node
 	var match bool

@@ -2,10 +2,11 @@ package goleri
 
 // Result is used as a Parse return value.
 type Result struct {
-	isValid bool
-	pos     int
-	expect  *expecting
-	tree    *Node
+	isValid    bool
+	pos        int
+	expect     *expecting
+	tree       *Node
+	expression string
 }
 
 // IsValid returns true when a parse result is valid.
@@ -21,3 +22,5 @@ func (r *Result) GetExpecting() []Element {
 
 // Tree returns the node tree.
 func (r *Result) Tree() *Node { return r.tree }
+
+

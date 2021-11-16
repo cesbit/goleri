@@ -5,6 +5,7 @@ type Element interface {
 	Gid() int
 	String() string
 	parse(p *parser, parent *Node, r *ruleStore) (*Node, error)
+	Text() string
 }
 
 type element struct {

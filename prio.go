@@ -24,6 +24,10 @@ func (prio *Prio) String() string {
 	return fmt.Sprintf("<Prio gid:%d elements:%v>", prio.gid, prio.elements)
 }
 
+func (prio *Prio) Text() string {
+	return fmt.Sprintf("%v", prio.elements)
+}
+
 func (prio *Prio) parse(p *parser, parent *Node, r *ruleStore) (*Node, error) {
 
 	if r.depth > PrioMaxRecursionDepth {
