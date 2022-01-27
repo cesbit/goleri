@@ -1,5 +1,5 @@
-[![CI](https://github.com/transceptor-technology/goleri/workflows/CI/badge.svg)](https://github.com/transceptor-technology/goleri/actions)
-[![Release Version](https://img.shields.io/github/release/transceptor-technology/goleri)](https://github.com/transceptor-technology/goleri/releases)
+[![CI](https://github.com/cesbit/goleri/workflows/CI/badge.svg)](https://github.com/cesbit/goleri/actions)
+[![Release Version](https://img.shields.io/github/release/cesbit/goleri)](https://github.com/cesbit/goleri/releases)
 
 
 # GoLeRi
@@ -34,19 +34,19 @@ A left-right parser for the Go language.
 ## Installation
 Simple install the package to your [$GOPATH](https://github.com/golang/go/wiki/GOPATH "GOPATH") with the [go tool](https://golang.org/cmd/go/ "go command") from shell:
 ```bash
-$ go get github.com/transceptor-technology/goleri
+$ go get github.com/cesbit/goleri
 ```
 Make sure [Git is installed](https://git-scm.com/downloads) on your machine and in your system's `PATH`.
 ## Related projects
 ---------------------------------------
-- [pyleri](https://github.com/transceptor-technology/pyleri): Python parser
-- [jsleri](https://github.com/transceptor-technology/jsleri): JavaScript parser
-- [libcleri](https://github.com/transceptor-technology/libcleri): C parser
-- [jleri](https://github.com/transceptor-technology/jleri): Java parser
+- [pyleri](https://github.com/cesbit/pyleri): Python parser
+- [jsleri](https://github.com/cesbit/jsleri): JavaScript parser
+- [libcleri](https://github.com/cesbit/libcleri): C parser
+- [jleri](https://github.com/cesbit/jleri): Java parser
 
 ---------------------------------------
 ## Quick usage
-We recommend using [pyleri](https://github.com/transceptor-technology/pyleri) for creating a grammar and export the grammar to goleri. This way you can create one single grammar and export the grammar to program languages like C, JavaScript, Go and Python.
+We recommend using [pyleri](https://github.com/cesbit/pyleri) for creating a grammar and export the grammar to goleri. This way you can create one single grammar and export the grammar to program languages like C, JavaScript, Go and Python.
 ```go
 package main
 
@@ -54,7 +54,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/transceptor-technology/goleri"
+	"github.com/cesbit/goleri"
 )
 
 // Element identifiers

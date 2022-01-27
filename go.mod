@@ -1,3 +1,3 @@
-module github.com/transceptor-technology/goleri
+module github.com/cesbit/goleri
 
 go 1.17

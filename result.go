@@ -23,4 +23,7 @@ func (r *Result) GetExpecting() []Element {
 // Tree returns the node tree.
 func (r *Result) Tree() *Node { return r.tree }
 
-
+// GetNodeString
+func (r *Result) GetNodeString(n *Node) string {
+	return r.expression[n.start:n.end]
+}
